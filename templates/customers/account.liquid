@@ -1,0 +1,41 @@
+{% layout 'theme' %}
+<div class="page-width customer-account">
+  <h1>{{ 'customer.account.title' | t }}</h1>
+  <div class="customer-grid">
+    <div>
+      <h2>{{ 'customer.orders.title' | t }}</h2>
+      {% paginate customer.orders by 20 %}
+        {% if customer.orders.size != 0 %}
+          <table>
+            <thead><tr><th>{{ 'customer.orders.order_number' | t }}</th><th>{{ 'customer.orders.date' | t }}</th><th>{{ 'customer.orders.payment_status' | t }}</th><th>{{ 'customer.orders.fulfillment_status' | t }}</th><th>{{ 'customer.orders.total' | t }}</th></tr></thead>
+            <tbody>
+              {% for order in customer.orders %}
+                <tr>
+                  <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: format: 'month_day_year' }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                  <td>{{ order.total_price | money_with_currency }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>{{ 'customer.orders.none' | t }}</p>
+        {% endif %}
+        {{ paginate | default_pagination }}
+      {% endpaginate %}
+    </div>
+    <div>
+      <h2>{{ 'customer.account.details' | t }}</h2>
+      {% if customer.default_address %}
+        <p>{{ customer.default_address | format_address }}</p>
+        <a href="{{ routes.account_addresses_url }}" class="button">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+      {% else %}
+        <p>{{ 'customer.addresses.no_addresses' | t }}</p>
+        <a href="{{ routes.account_addresses_url }}" class="button">{{ 'customer.account.add_address' | t }}</a>
+      {% endif %}
+      <p><a href="{{ routes.account_logout_url }}">{{ 'customer.log_out' | t }}</a></p>
+    </div>
+  </div>
+</div>

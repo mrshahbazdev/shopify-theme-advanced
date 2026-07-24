@@ -1,0 +1,31 @@
+{% layout 'theme' %}
+<div class="page-width customer-account">
+  <h1>{{ 'customer.order.title' | t: name: order.name }}</h1>
+  <p>{{ 'customer.order.date' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
+  {% if order.cancelled %}
+    <div class="note">{{ 'customer.order.cancelled' | t: date: order.cancelled_at | date: "%B %d, %Y %I:%M%p" }}</div>
+  {% endif %}
+  <table>
+    <thead><tr><th>{{ 'customer.order.product' | t }}</th><th>{{ 'customer.order.sku' | t }}</th><th>{{ 'customer.order.price' | t }}</th><th>{{ 'customer.order.quantity' | t }}</th><th>{{ 'customer.order.total' | t }}</th></tr></thead>
+    <tbody>
+      {% for line_item in order.line_items %}
+        <tr>
+          <td>{{ line_item.title | link_to: line_item.product.url }}</td>
+          <td>{{ line_item.sku }}</td>
+          <td>{{ line_item.price | money }}</td>
+          <td>{{ line_item.quantity }}</td>
+          <td>{{ line_item.quantity | times: line_item.price | money }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr><td colspan="4">{{ 'customer.order.subtotal' | t }}</td><td>{{ order.subtotal_price | money }}</td></tr>
+      <tr><td colspan="4">{{ 'customer.order.shipping' | t }}</td><td>{{ order.shipping_price | money }}</td></tr>
+      <tr><td colspan="4">{{ 'customer.order.total' | t }}</td><td>{{ order.total_price | money_with_currency }}</td></tr>
+    </tfoot>
+  </table>
+  <h2>{{ 'customer.order.billing_address' | t }}</h2>
+  {{ order.billing_address | format_address }}
+  <h2>{{ 'customer.order.shipping_address' | t }}</h2>
+  {{ order.shipping_address | format_address }}
+</div>

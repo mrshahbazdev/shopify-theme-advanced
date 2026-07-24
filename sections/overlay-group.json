@@ -1,0 +1,27 @@
+{
+  "type": "custom.overlay",
+  "name": "Overlay group",
+  "sections": {
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "settings": {}
+    },
+    "age-verifier": {
+      "type": "age-verifier",
+      "settings": {
+        "enabled": false
+      }
+    },
+    "newsletter-popup": {
+      "type": "newsletter-popup",
+      "settings": {
+        "enabled": false
+      }
+    }
+  },
+  "order": [
+    "cart-drawer",
+    "age-verifier",
+    "newsletter-popup"
+  ]
+}

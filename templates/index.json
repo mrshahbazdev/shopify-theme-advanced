@@ -1,0 +1,38 @@
+{
+  "sections": {
+    "banner": {
+      "type": "image-banner",
+      "settings": {}
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Featured collection"
+      }
+    },
+    "collections": {
+      "type": "collection-list",
+      "settings": {}
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "countdown": {
+      "type": "countdown-timer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "banner",
+    "featured_collection",
+    "collections",
+    "rich_text",
+    "testimonials",
+    "countdown"
+  ]
+}

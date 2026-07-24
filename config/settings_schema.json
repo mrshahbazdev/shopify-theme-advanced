@@ -1,0 +1,192 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Nova Advanced",
+    "theme_version": "1.0.0",
+    "theme_author": "mrshahbazdev",
+    "theme_documentation_url": "https://github.com/mrshahbazdev/shopify-theme-advanced",
+    "theme_support_url": "https://github.com/mrshahbazdev/shopify-theme-advanced/issues"
+  },
+  {
+    "name": "colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand colors"
+      },
+      {
+        "type": "color",
+        "id": "colors_primary",
+        "label": "Primary color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "colors_secondary",
+        "label": "Secondary color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "colors_accent",
+        "label": "Accent color",
+        "default": "#ff6b35"
+      },
+      {
+        "type": "color",
+        "id": "colors_text",
+        "label": "Text color",
+        "default": "#333333"
+      },
+      {
+        "type": "color",
+        "id": "colors_background",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "colors_text_inverse",
+        "label": "Inverse text color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color_background",
+        "id": "colors_gradient",
+        "label": "Gradient overlay",
+        "default": "linear-gradient(135deg, #000000, #333333)"
+      }
+    ]
+  },
+  {
+    "name": "typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "label": "Headings font",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "range",
+        "id": "type_base_size",
+        "label": "Base font size",
+        "min": 12,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      }
+    ]
+  },
+  {
+    "name": "social",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok",
+        "default": ""
+      }
+    ]
+  },
+  {
+    "name": "advanced",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Advanced features"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_predictive_search",
+        "label": "Enable predictive search",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_ajax_cart",
+        "label": "Enable AJAX cart drawer",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "age_verifier_enabled",
+        "label": "Enable age verifier",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "newsletter_popup_enabled",
+        "label": "Enable newsletter popup",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "newsletter_popup_delay",
+        "label": "Newsletter popup delay (ms)",
+        "default": "5000"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_back_to_top",
+        "label": "Enable back to top button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quick_view",
+        "label": "Enable quick view",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  }
+]

@@ -1,0 +1,34 @@
+{% layout 'theme' %}
+<div class="page-width customer-account">
+  <h1>{{ 'customer.addresses.title' | t }}</h1>
+  <button type="button" class="button" onclick="document.getElementById('AddAddress').classList.toggle('hidden')">{{ 'customer.addresses.add_new' | t }}</button>
+  <div id="AddAddress" class="hidden address-form">
+    {% form 'customer_address', customer.new_address %}
+      <label for="AddressFirstNameNew">{{ 'customer.addresses.first_name' | t }}</label>
+      <input type="text" name="address[first_name]" id="AddressFirstNameNew" value="{{ form.first_name }}">
+      <label for="AddressLastNameNew">{{ 'customer.addresses.last_name' | t }}</label>
+      <input type="text" name="address[last_name]" id="AddressLastNameNew" value="{{ form.last_name }}">
+      <label for="AddressCompanyNew">{{ 'customer.addresses.company' | t }}</label>
+      <input type="text" name="address[company]" id="AddressCompanyNew" value="{{ form.company }}">
+      <label for="AddressAddress1New">{{ 'customer.addresses.address1' | t }}</label>
+      <input type="text" name="address[address1]" id="AddressAddress1New" value="{{ form.address1 }}">
+      <label for="AddressCityNew">{{ 'customer.addresses.city' | t }}</label>
+      <input type="text" name="address[city]" id="AddressCityNew" value="{{ form.city }}">
+      <label for="AddressCountryNew">{{ 'customer.addresses.country' | t }}</label>
+      <select name="address[country]" id="AddressCountryNew">{{ all_country_option_tags }}</select>
+      <label for="AddressZipNew">{{ 'customer.addresses.zip' | t }}</label>
+      <input type="text" name="address[zip]" id="AddressZipNew" value="{{ form.zip }}">
+      <label for="AddressPhoneNew">{{ 'customer.addresses.phone' | t }}</label>
+      <input type="tel" name="address[phone]" id="AddressPhoneNew" value="{{ form.phone }}">
+      <label><input type="checkbox" name="address[default]" value="1"> {{ 'customer.addresses.set_default' | t }}</label>
+      <button type="submit" class="button button--primary">{{ 'customer.addresses.add' | t }}</button>
+    {% endform %}
+  </div>
+  {% for address in customer.addresses %}
+    <div class="address">
+      {{ address | format_address }}
+      {% if address == customer.default_address %}<strong>{{ 'customer.addresses.default' | t }}</strong>{% endif %}
+      <a href="{{ routes.account_addresses_url }}#edit_{{ address.id }}" class="button">{{ 'customer.addresses.edit' | t }}</a>
+    </div>
+  {% endfor %}
+</div>

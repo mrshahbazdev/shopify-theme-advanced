@@ -17,7 +17,7 @@
     {%- assign object_image = link.object.image | default: link.object.featured_image -%}
     {%- if object_image != blank -%}
       <div class="mega-menu__image">
-        <img src="{{ object_image | image_url: width: 300 }}" alt="" loading="lazy" width="300">
+        <img src="{{ object_image | image_url: width: 300 }}" alt="" loading="lazy" width="300" height="{{ object_image.height | times: 1.0 | divided_by: object_image.width | times: 300 | round }}">
       </div>
     {%- endif -%}
   </div>

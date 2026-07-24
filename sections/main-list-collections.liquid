@@ -5,7 +5,7 @@
       <div class="collection-card">
         <a href="{{ collection.url }}" class="collection-card__link">
           {%- if collection.image != blank -%}
-            <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy" width="600">
+            <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy" width="600" height="{{ collection.image.height | times: 1.0 | divided_by: collection.image.width | times: 600 | round }}">
           {%- else -%}
             <div class="collection-card__placeholder"></div>
           {%- endif -%}

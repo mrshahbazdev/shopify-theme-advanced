@@ -5,7 +5,7 @@
       {%- for block in section.blocks -%}
         <div class="testimonial" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 120 }}" alt="{{ block.settings.author | escape }}" class="testimonial__avatar" loading="lazy" width="120">
+            <img src="{{ block.settings.image | image_url: width: 120 }}" alt="{{ block.settings.author | escape }}" class="testimonial__avatar" loading="lazy" width="120" height="{{ block.settings.image.height | times: 1.0 | divided_by: block.settings.image.width | times: 120 | round }}">
           {%- endif -%}
           {%- if block.settings.rating > 0 -%}
             <div class="testimonial__stars" aria-label="{{ block.settings.rating }} stars">
@@ -34,6 +34,6 @@
       {"type": "text", "id": "author", "label": "Author", "default": "Happy Customer"}
     ]}
   ],
-  "presets": [{"name": "Testimonials", "blocks": {"testimonial-1": {"type": "testimonial"}, "testimonial-2": {"type": "testimonial"}, "testimonial-3": {"type": "testimonial"}}}]
+  "presets": [{"name": "Testimonials", "blocks": {"testimonial-1": {"type": "testimonial"}, "testimonial-2": {"type": "testimonial"}, "testimonial-3": {"type": "testimonial"}}, "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"]}]
 }
 {% endschema %}

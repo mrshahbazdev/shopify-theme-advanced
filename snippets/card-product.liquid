@@ -2,9 +2,9 @@
   <a href="{{ product.url }}" class="card-product__link">
     <div class="card-product__media">
       {%- if product.featured_image != blank -%}
-        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="card-product__image card-product__image--primary" width="600">
+        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="card-product__image card-product__image--primary" width="600" height="{{ product.featured_image.height | times: 1.0 | divided_by: product.featured_image.width | times: 600 | round }}">
         {%- if product.images[1] != blank -%}
-          <img src="{{ product.images[1] | image_url: width: 600 }}" alt="" loading="lazy" class="card-product__image card-product__image--hover" width="600">
+          <img src="{{ product.images[1] | image_url: width: 600 }}" alt="" loading="lazy" class="card-product__image card-product__image--hover" width="600" height="{{ product.images[1].height | times: 1.0 | divided_by: product.images[1].width | times: 600 | round }}">
         {%- endif -%}
       {%- else -%}
         <div class="card-product__placeholder">{{ product.title | escape }}</div>

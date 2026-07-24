@@ -2,7 +2,7 @@
   <div class="collection-page__header page-width">
     <h1 class="collection-page__title">{{ collection.title | escape }}</h1>
     {%- if collection.description != blank -%}<div class="collection-page__description rte">{{ collection.description }}</div>{%- endif -%}
-    {%- if collection.image != blank -%}<img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}" class="collection-page__image" loading="eager" width="1600">{%- endif -%}
+    {%- if collection.image != blank -%}<img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}" class="collection-page__image" loading="eager" width="1600" height="{{ collection.image.height | times: 1.0 | divided_by: collection.image.width | times: 1600 | round }}">{%- endif -%}
   </div>
   <div class="page-width">
     <div class="collection-toolbar">

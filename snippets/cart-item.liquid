@@ -1,7 +1,7 @@
 <div class="cart-item {% if compact %}cart-item--compact{% endif %}" data-cart-item data-line="{{ index }}">
   <div class="cart-item__image">
     {%- if item.image != blank -%}
-      <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" loading="lazy" width="120">
+      <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" loading="lazy" width="120" height="{{ item.image.height | times: 1.0 | divided_by: item.image.width | times: 120 | round }}">
     {%- endif -%}
   </div>
   <div class="cart-item__details">

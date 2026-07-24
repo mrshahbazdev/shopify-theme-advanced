@@ -1,0 +1,24 @@
+{%- if link.links != blank -%}
+  <div class="mega-menu">
+    <div class="mega-menu__columns">
+      {%- for child_link in link.links -%}
+        <div class="mega-menu__column">
+          <a href="{{ child_link.url }}" class="mega-menu__title">{{ child_link.title | escape }}</a>
+          {%- if child_link.links != blank -%}
+            <ul class="mega-menu__list">
+              {%- for grandchild_link in child_link.links -%}
+                <li><a href="{{ grandchild_link.url }}">{{ grandchild_link.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- assign object_image = link.object.image | default: link.object.featured_image -%}
+    {%- if object_image != blank -%}
+      <div class="mega-menu__image">
+        <img src="{{ object_image | image_url: width: 300 }}" alt="" loading="lazy" width="300">
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

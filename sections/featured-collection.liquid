@@ -1,0 +1,31 @@
+<div class="featured-collection page-width section-{{ section.id }}">
+  {%- if section.settings.heading != blank -%}<h2 class="section-title">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+  {%- assign collection_obj = collections[section.settings.collection] -%}
+  {%- if collection_obj != blank -%}
+    <div class="product-grid product-grid--{{ section.settings.columns_desktop }}-col-desktop product-grid--{{ section.settings.columns_mobile }}-col-mobile {% if section.settings.enable_slider %}product-grid--slider{% endif %}">
+      {%- for product in collection_obj.products limit: section.settings.products_to_show -%}
+        {% render 'card-product', product: product, section_id: section.id %}
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.show_view_all -%}
+      <a href="{{ collection_obj.url }}" class="button button--secondary featured-collection__view-all">View all</a>
+    {%- endif -%}
+  {%- else -%}
+    <p class="featured-collection__empty">Select a collection in the theme editor.</p>
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading", "default": "Featured collection"},
+    {"type": "collection", "id": "collection", "label": "Collection"},
+    {"type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 4},
+    {"type": "range", "id": "columns_desktop", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 4},
+    {"type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{"value": "1", "label": "1"}, {"value": "2", "label": "2"}], "default": "2"},
+    {"type": "checkbox", "id": "enable_slider", "label": "Enable slider", "default": false},
+    {"type": "checkbox", "id": "show_view_all", "label": "Show view all button", "default": true}
+  ],
+  "presets": [{"name": "Featured collection"}]
+}
+{% endschema %}

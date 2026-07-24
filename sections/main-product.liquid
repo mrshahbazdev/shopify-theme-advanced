@@ -1,0 +1,150 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<div class="product-page page-width section-{{ section.id }}">
+  <div class="product-page__grid">
+    <div class="product-page__media">
+      {%- if product.media.size > 0 -%}
+        <div class="product-media" data-product-media>
+          {%- for media in product.media -%}
+            <div class="product-media__item {% if forloop.first %}product-media__item--active{% endif %}" data-media-id="{{ media.id }}">
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  <img src="{{ media | image_url: width: 1200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="1200">
+                {%- when 'video' -%}
+                  {{ media | video_tag: controls: true, class: 'product-media__video' }}
+                {%- when 'external_video' -%}
+                  {{ media | external_video_tag: class: 'product-media__video' }}
+                {%- when 'model' -%}
+                  {{ media | model_viewer_tag }}
+              {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product-media__thumbnails">
+            {%- for media in product.media -%}
+              <button type="button" class="product-media__thumb {% if forloop.first %}product-media__thumb--active{% endif %}" data-media-id="{{ media.id }}">
+                {%- if media.media_type == 'image' -%}
+                  <img src="{{ media | image_url: width: 120 }}" alt="" loading="lazy" width="120">
+                {%- else -%}
+                  <span class="product-media__thumb-icon">Video</span>
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+    <div class="product-page__info" {% if section.settings.enable_sticky_atc %}data-sticky-info{% endif %}>
+      <h1 class="product__title">{{ product.title | escape }}</h1>
+      <div class="product__price" data-product-price>{% render 'price', product: product, variant: current_variant %}</div>
+      {%- if section.settings.show_vendor and product.vendor != blank -%}
+        <p class="product__vendor">{{ product.vendor | link_to_vendor }}</p>
+      {%- endif -%}
+      {%- if section.settings.show_sku and current_variant.sku != blank -%}
+        <p class="product__sku">SKU: {{ current_variant.sku | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.show_inventory and current_variant.inventory_quantity > 0 -%}
+        <p class="product__inventory">{{ current_variant.inventory_quantity }} in stock</p>
+      {%- endif -%}
+      <div class="product__description rte">{{ product.description }}</div>
+      {% form 'product', product, id: 'product-form', class: 'product-form js-product-form', novalidate: 'novalidate' %}
+        {%- unless product.has_only_default_variant -%}
+          <div class="product-form__variants" data-product-options>
+            {%- for option in product.options_with_values -%}
+              <div class="product-form__option">
+                <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name | escape }}</label>
+                {%- if section.settings.enable_swatches and (option.name == 'Color' or option.name == 'Colour') -%}
+                  <div class="swatches" data-option-index="{{ forloop.index0 }}">
+                    {%- for value in option.values -%}
+                      <label class="swatch" title="{{ value | escape }}">
+                        <input type="radio" name="option{{ forloop.parentloop.index }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-value data-option-index="{{ forloop.parentloop.index0 }}">
+                        <span class="swatch__visual" style="background-color: {{ value | handle }};"></span>
+                      </label>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <select id="Option-{{ section.id }}-{{ forloop.index0 }}" name="option{{ forloop.index }}" class="select" data-option-index="{{ forloop.index0 }}">
+                    {%- for value in option.values -%}
+                      <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value | escape }}</option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+        <select name="id" class="product-form__id" data-variant-select hidden>
+          {%- for variant in product.variants -%}
+            <option value="{{ variant.id }}" data-options="{{ variant.option1 | escape }}|{{ variant.option2 | escape }}|{{ variant.option3 | escape }}" data-available="{{ variant.available }}" data-price="{{ variant.price }}" data-compare="{{ variant.compare_at_price }}" {% if variant == current_variant %}selected{% endif %}>{{ variant.title }} - {{ variant.price | money }}</option>
+          {%- endfor -%}
+        </select>
+        <div class="product-form__quantity">
+          <label for="Quantity-{{ section.id }}">{{ 'products.quantity' | t }}</label>
+          <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="quantity-input">
+        </div>
+        <div class="product-form__buttons">
+          <button type="submit" name="add" class="button button--primary product-form__submit" data-add-to-cart {% if current_variant.available == false %}disabled{% endif %}>
+            {%- if current_variant.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+          </button>
+          {{ form | payment_button }}
+        </div>
+        <p class="product-form__error" data-form-error></p>
+      {% endform %}
+      {%- if section.settings.enable_tabs -%}
+        <div class="product-tabs">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'tab' -%}
+              <details class="product-tab" {{ block.shopify_attributes }}>
+                <summary>{{ block.settings.heading | escape }}</summary>
+                <div class="rte">{{ block.settings.content }}</div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.show_share_buttons -%}
+        <div class="product__share">
+          {% render 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{%- if section.settings.enable_sticky_atc -%}
+  <div class="product-sticky-atc" data-sticky-atc>
+    <div class="page-width product-sticky-atc__inner">
+      {%- if product.featured_image != blank -%}
+        <img src="{{ product.featured_image | image_url: width: 80 }}" alt="" loading="lazy" width="80">
+      {%- endif -%}
+      <div>
+        <h4>{{ product.title | escape }}</h4>
+        <span data-sticky-price>{% render 'price', product: product, variant: current_variant %}</span>
+      </div>
+      <button type="button" class="button button--primary" data-sticky-add>{{ 'products.add_to_cart' | t }}</button>
+    </div>
+  </div>
+{%- endif -%}
+<script type="application/json" data-product-variants>{{ product.variants | json }}</script>
+<script type="application/json" data-product-options>{{ product.options | json }}</script>
+{% schema %}
+{
+  "name": "Main product",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {"type": "tab", "name": "Tab", "settings": [
+      {"type": "text", "id": "heading", "label": "Heading", "default": "Details"},
+      {"type": "richtext", "id": "content", "label": "Content", "default": "<p>Add product details here.</p>"}
+    ]}
+  ],
+  "settings": [
+    {"type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": true},
+    {"type": "checkbox", "id": "show_sku", "label": "Show SKU", "default": false},
+    {"type": "checkbox", "id": "show_inventory", "label": "Show inventory", "default": false},
+    {"type": "checkbox", "id": "enable_swatches", "label": "Enable color swatches", "default": true},
+    {"type": "checkbox", "id": "enable_tabs", "label": "Enable product tabs", "default": true},
+    {"type": "checkbox", "id": "show_share_buttons", "label": "Show share buttons", "default": true},
+    {"type": "checkbox", "id": "enable_sticky_atc", "label": "Enable sticky add to cart", "default": true}
+  ]
+}
+{% endschema %}

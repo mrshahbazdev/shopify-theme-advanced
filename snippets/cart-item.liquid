@@ -1,0 +1,18 @@
+<div class="cart-item {% if compact %}cart-item--compact{% endif %}" data-cart-item data-line="{{ index }}">
+  <div class="cart-item__image">
+    {%- if item.image != blank -%}
+      <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" loading="lazy" width="120">
+    {%- endif -%}
+  </div>
+  <div class="cart-item__details">
+    <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title | escape }}</a>
+    {%- unless item.variant.title == 'Default Title' -%}<p class="cart-item__variant">{{ item.variant.title | escape }}</p>{%- endunless -%}
+    <p class="cart-item__price">{{ item.final_line_price | money }}</p>
+    <div class="cart-item__qty">
+      <button type="button" class="cart-item__qty-btn" data-qty-change="-1" data-line="{{ index }}" aria-label="Decrease">-</button>
+      <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line="{{ index }}" class="cart-item__qty-input" aria-label="Quantity">
+      <button type="button" class="cart-item__qty-btn" data-qty-change="1" data-line="{{ index }}" aria-label="Increase">+</button>
+    </div>
+  </div>
+  <button type="button" class="cart-item__remove" data-line-remove="{{ index }}" aria-label="Remove">{% render 'icon-close' %}</button>
+</div>

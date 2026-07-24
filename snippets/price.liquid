@@ -1,0 +1,13 @@
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+-%}
+<div class="price {% if target.compare_at_price > target.price %}price--on-sale{% endif %}">
+  <span class="price__regular">{{ target.price | money }}</span>
+  {%- if target.compare_at_price > target.price -%}
+    <s class="price__compare">{{ target.compare_at_price | money }}</s>
+    <span class="price__sale">{{ target.price | money }}</span>
+  {%- endif -%}
+  {%- if target.unit_price_measurement -%}
+    <span class="price__unit">{{ target.unit_price | money }} / {{ target.unit_price_measurement.reference_unit }}</span>
+  {%- endif -%}
+</div>

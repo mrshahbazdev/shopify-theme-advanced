@@ -17,6 +17,13 @@
   {% endif %}
   {{ content_for_header }}
   {% render 'css-variables' %}
+  <script>
+    window.theme = {
+      routes: {{ routes | json }},
+      moneyFormat: {{ shop.money_format | json }},
+      moneyWithCurrency: {{ shop.money_with_currency_format | json }}
+    };
+  </script>
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'component-card.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'theme.js' | asset_url }}" defer></script>

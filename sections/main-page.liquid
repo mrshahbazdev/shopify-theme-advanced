@@ -1,0 +1,11 @@
+<div class="page-width section-{{ section.id }}">
+  <h1 class="page-title">{{ page.title | escape }}</h1>
+  <div class="rte">{{ page.content }}</div>
+</div>
+{% schema %}
+{
+  "name": "Main page",
+  "tag": "section",
+  "class": "section"
+}
+{% endschema %}

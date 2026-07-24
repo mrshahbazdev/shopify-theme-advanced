@@ -1,0 +1,22 @@
+<div class="card-product" data-product-card data-product-handle="{{ product.handle }}">
+  <a href="{{ product.url }}" class="card-product__link">
+    <div class="card-product__media">
+      {%- if product.featured_image != blank -%}
+        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="card-product__image card-product__image--primary" width="600">
+        {%- if product.images[1] != blank -%}
+          <img src="{{ product.images[1] | image_url: width: 600 }}" alt="" loading="lazy" class="card-product__image card-product__image--hover" width="600">
+        {%- endif -%}
+      {%- else -%}
+        <div class="card-product__placeholder">{{ product.title | escape }}</div>
+      {%- endif -%}
+    </div>
+  </a>
+  <div class="card-product__info">
+    {%- if settings.enable_quick_view -%}
+      <button type="button" class="card-product__quick-view" data-quick-view="{{ product.handle }}">{{ 'products.quick_view' | t }}</button>
+    {%- endif -%}
+    <h3 class="card-product__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+    {%- if product.vendor != blank -%}<p class="card-product__vendor">{{ product.vendor | escape }}</p>{%- endif -%}
+    <div class="card-product__price">{% render 'price', product: product %}</div>
+  </div>
+</div>

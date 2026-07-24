@@ -1,0 +1,97 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign logo_width = section.settings.logo_width
+  assign menu_obj = linklists[menu]
+-%}
+<header class="header {% if section.settings.enable_sticky %}header--sticky{% endif %}" data-section-id="{{ section.id }}" data-sticky="{{ section.settings.enable_sticky }}">
+  <div class="page-width header__inner">
+    <button type="button" class="header__icon header__icon--menu js-menu-toggle" aria-label="{{ 'general.navigation.menu' | t }}" aria-expanded="false">
+      {% render 'icon-menu' %}
+    </button>
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: logo_width }}" alt="{{ shop.name | escape }}" width="{{ logo_width }}" loading="eager">
+      {%- else -%}
+        <span class="h2">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+    <nav class="header__nav desktop-only" aria-label="Main navigation">
+      <ul class="header__menu">
+        {%- if menu_obj -%}
+        {%- for link in menu_obj.links -%}
+          <li class="header__menu-item {% if link.links != blank %}header__menu-item--has-mega{% endif %}">
+            <a href="{{ link.url }}" class="header__menu-link {% if link.active %}header__menu-link--active{% endif %}">{{ link.title | escape }}</a>
+            {%- if link.links != blank -%}
+              {% render 'mega-menu', link: link %}
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </nav>
+    <div class="header__icons">
+      {%- if section.settings.enable_search -%}
+        <button type="button" class="header__icon js-search-toggle" aria-label="{{ 'general.search.search' | t }}" aria-expanded="false">
+          {% render 'icon-search' %}
+        </button>
+      {%- endif -%}
+      <a href="{{ routes.account_url }}" class="header__icon" aria-label="{{ 'general.navigation.account' | t }}">
+        {% render 'icon-account' %}
+      </a>
+      <button type="button" class="header__icon header__icon--cart js-cart-toggle" aria-label="{{ 'general.navigation.cart' | t }}">
+        {% render 'icon-cart' %}
+        {%- if section.settings.show_cart_count -%}
+          <span class="header__cart-count js-cart-count" data-cart-count="{{ cart.item_count }}">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </button>
+    </div>
+  </div>
+  {%- if section.settings.enable_search -%}
+    <div class="header__search-overlay js-search-overlay" aria-hidden="true">
+      <div class="page-width">
+        <predictive-search class="predictive-search" data-base-url="{{ routes.search_url }}">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="header__search-form">
+            <input type="search" name="q" placeholder="{{ 'general.search.search' | t }}" class="header__search-input" data-predictive-search-input>
+            <button type="submit" class="button button--primary" aria-label="{{ 'general.search.search' | t }}">{% render 'icon-search' %}</button>
+          </form>
+          <div class="predictive-search__results" data-predictive-search-results aria-live="polite"></div>
+        </predictive-search>
+      </div>
+    </div>
+  {%- endif -%}
+</header>
+<div class="mobile-menu js-mobile-menu" aria-hidden="true">
+  <div class="mobile-menu__overlay js-menu-close"></div>
+  <div class="mobile-menu__drawer">
+    <button type="button" class="mobile-menu__close js-menu-close" aria-label="{{ 'general.navigation.close' | t }}">{% render 'icon-close' %}</button>
+    <ul class="mobile-menu__list">
+      {%- if menu_obj -%}
+      {%- for link in menu_obj.links -%}
+        <li>
+          <a href="{{ link.url }}">{{ link.title | escape }}</a>
+          {%- if link.links != blank -%}
+            <ul>
+              {%- for child in link.links -%}
+                <li><a href="{{ child.url }}">{{ child.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {"type": "image_picker", "id": "logo", "label": "Logo"},
+    {"type": "range", "id": "logo_width", "label": "Logo width", "min": 50, "max": 300, "step": 5, "unit": "px", "default": 150},
+    {"type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu"},
+    {"type": "checkbox", "id": "enable_sticky", "label": "Sticky header", "default": true},
+    {"type": "checkbox", "id": "enable_search", "label": "Enable predictive search", "default": true},
+    {"type": "checkbox", "id": "show_cart_count", "label": "Show cart count", "default": true}
+  ]
+}
+{% endschema %}

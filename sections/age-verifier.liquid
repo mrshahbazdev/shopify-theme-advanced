@@ -1,0 +1,27 @@
+<div class="age-verifier {% unless section.settings.enabled %}hidden{% endunless %}" data-age-verifier data-min-age="{{ section.settings.minimum_age }}" data-redirect="{{ section.settings.redirect_url }}" role="dialog" aria-label="Age verification">
+  <div class="age-verifier__overlay"></div>
+  <div class="age-verifier__content">
+    <h2>{{ section.settings.heading | escape }}</h2>
+    <div class="rte">{{ section.settings.text }}</div>
+    <p class="age-verifier__question">{{ section.settings.question | escape }}</p>
+    <div class="age-verifier__buttons">
+      <button type="button" class="button button--primary js-age-yes">{{ section.settings.yes_label | escape }}</button>
+      <button type="button" class="button button--secondary js-age-no">{{ section.settings.no_label | escape }}</button>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Age verifier",
+  "settings": [
+    {"type": "checkbox", "id": "enabled", "label": "Enabled", "default": false},
+    {"type": "text", "id": "heading", "label": "Heading", "default": "Age verification"},
+    {"type": "richtext", "id": "text", "label": "Text", "default": "<p>You must be of legal drinking age to enter this site.</p>"},
+    {"type": "text", "id": "question", "label": "Question", "default": "Are you 18 or older?"},
+    {"type": "text", "id": "minimum_age", "label": "Minimum age", "default": "18"},
+    {"type": "url", "id": "redirect_url", "label": "Redirect URL (if under age)"},
+    {"type": "text", "id": "yes_label", "label": "Yes button", "default": "Yes"},
+    {"type": "text", "id": "no_label", "label": "No button", "default": "No"}
+  ]
+}
+{% endschema %}

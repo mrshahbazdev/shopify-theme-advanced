@@ -1,0 +1,32 @@
+<div class="collection-list page-width section-{{ section.id }}">
+  {%- if section.settings.heading != blank -%}<h2 class="section-title">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+  <div class="collection-grid collection-grid--{{ section.settings.columns_desktop }}-col-desktop collection-grid--{{ section.settings.columns_mobile }}-col-mobile">
+    {%- for block in section.blocks -%}
+      {%- assign collection_obj = collections[block.settings.collection] -%}
+      {%- if collection_obj != blank -%}
+        <div class="collection-card" {{ block.shopify_attributes }}>
+          <a href="{{ collection_obj.url }}" class="collection-card__link">
+            {%- if collection_obj.image != blank -%}
+              <img src="{{ collection_obj.image | image_url: width: 600 }}" alt="{{ collection_obj.title | escape }}" loading="lazy" width="600">
+            {%- else -%}
+              <div class="collection-card__placeholder"></div>
+            {%- endif -%}
+            <h3 class="collection-card__title">{{ collection_obj.title | escape }}</h3>
+          </a>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Collection list",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading", "default": "Shop by collection"},
+    {"type": "range", "id": "columns_desktop", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 3},
+    {"type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{"value": "1", "label": "1"}, {"value": "2", "label": "2"}], "default": "2"}
+  ],
+  "blocks": [{"type": "collection", "name": "Collection", "settings": [{"type": "collection", "id": "collection", "label": "Collection"}]}],
+  "presets": [{"name": "Collection list", "blocks": {"collection-1": {"type": "collection"}, "collection-2": {"type": "collection"}, "collection-3": {"type": "collection"}}}]
+}
+{% endschema %}

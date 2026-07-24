@@ -1,0 +1,53 @@
+<div class="collection-page section-{{ section.id }}">
+  <div class="collection-page__header page-width">
+    <h1 class="collection-page__title">{{ collection.title | escape }}</h1>
+    {%- if collection.description != blank -%}<div class="collection-page__description rte">{{ collection.description }}</div>{%- endif -%}
+    {%- if collection.image != blank -%}<img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}" class="collection-page__image" loading="eager" width="1600">{%- endif -%}
+  </div>
+  <div class="page-width">
+    <div class="collection-toolbar">
+      <div class="collection-toolbar__count">{{ collection.products_count }} products</div>
+      {%- if section.settings.enable_sorting -%}
+        <form action="{{ collection.url }}" method="get" class="collection-toolbar__sort">
+          <label for="SortBy">Sort by</label>
+          <select name="sort_by" id="SortBy" onchange="this.form.submit()">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </form>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.enable_filters and collection.all_tags.size > 0 -%}
+      <div class="collection-filters">
+        <span class="collection-filters__label">Filter by:</span>
+        {%- for tag in collection.all_tags -%}
+          {{ tag | link_to_tag: tag }}
+        {%- endfor -%}
+        {%- if current_tags -%}<a href="{{ collection.url }}" class="collection-filters__clear">Clear all</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+    {% paginate collection.products by section.settings.products_per_page %}
+      <div class="product-grid product-grid--{{ section.settings.columns_desktop }}-col-desktop product-grid--{{ section.settings.columns_mobile }}-col-mobile">
+        {%- for product in collection.products -%}
+          {% render 'card-product', product: product, section_id: section.id %}
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {% endpaginate %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Main collection",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {"type": "range", "id": "products_per_page", "label": "Products per page", "min": 4, "max": 48, "step": 4, "default": 12},
+    {"type": "range", "id": "columns_desktop", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 4},
+    {"type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{"value": "1", "label": "1"}, {"value": "2", "label": "2"}], "default": "2"},
+    {"type": "checkbox", "id": "enable_sorting", "label": "Enable sorting", "default": true},
+    {"type": "checkbox", "id": "enable_filters", "label": "Enable tag filters", "default": true}
+  ]
+}
+{% endschema %}

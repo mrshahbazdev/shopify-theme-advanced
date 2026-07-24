@@ -1,0 +1,41 @@
+<div class="search-page page-width section-{{ section.id }}">
+  <h1 class="search-page__title">{{ 'general.search.search' | t }}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.search' | t }}" aria-label="{{ 'general.search.search' | t }}">
+    <button type="submit" class="button button--primary">{{ 'general.search.search' | t }}</button>
+  </form>
+  {%- if search.performed -%}
+    {%- if search.results_count > 0 -%}
+      <p class="search-page__count">{{ 'templates.search.results_with_count' | t: count: search.results_count, terms: search.terms }}</p>
+      {% paginate search.results by section.settings.products_per_page %}
+        <div class="product-grid product-grid--{{ section.settings.columns_desktop }}-col-desktop product-grid--{{ section.settings.columns_mobile }}-col-mobile">
+          {%- for item in search.results -%}
+            {%- case item.object_type -%}
+              {%- when 'product' -%}
+                {% render 'card-product', product: item, section_id: section.id %}
+              {%- when 'article' -%}
+                <article class="card card--article"><a href="{{ item.url }}"><h3>{{ item.title | escape }}</h3></a></article>
+              {%- when 'page' -%}
+                <article class="card card--page"><a href="{{ item.url }}"><h3>{{ item.title | escape }}</h3></a></article>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+        {% render 'pagination', paginate: paginate %}
+      {% endpaginate %}
+    {%- else -%}
+      <p class="search-page__empty">{{ 'templates.search.no_results' | t }}</p>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Main search",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {"type": "range", "id": "products_per_page", "label": "Results per page", "min": 4, "max": 48, "step": 4, "default": 16},
+    {"type": "range", "id": "columns_desktop", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 4},
+    {"type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{"value": "1", "label": "1"}, {"value": "2", "label": "2"}], "default": "2"}
+  ]
+}
+{% endschema %}

@@ -1,0 +1,29 @@
+<div class="list-collections page-width section-{{ section.id }}">
+  <h1 class="page-title">{{ page.title | default: 'All collections' | escape }}</h1>
+  <div class="collection-grid collection-grid--{{ section.settings.columns_desktop }}-col-desktop collection-grid--{{ section.settings.columns_mobile }}-col-mobile">
+    {%- for collection in collections -%}
+      <div class="collection-card">
+        <a href="{{ collection.url }}" class="collection-card__link">
+          {%- if collection.image != blank -%}
+            <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy" width="600">
+          {%- else -%}
+            <div class="collection-card__placeholder"></div>
+          {%- endif -%}
+          <h3 class="collection-card__title">{{ collection.title | escape }}</h3>
+          <p>{{ collection.products_count }} products</p>
+        </a>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Main list collections",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {"type": "range", "id": "columns_desktop", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 3},
+    {"type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{"value": "1", "label": "1"}, {"value": "2", "label": "2"}], "default": "2"}
+  ]
+}
+{% endschema %}

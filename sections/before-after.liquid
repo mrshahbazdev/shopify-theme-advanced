@@ -1,0 +1,24 @@
+<div class="before-after page-width section-{{ section.id }}" data-before-after>
+  {%- if section.settings.heading != blank -%}<h2 class="section-title">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+  <div class="before-after__container" style="--after-clip: {{ section.settings.initial_position }}%;">
+    {%- if section.settings.image_before != blank -%}
+      <img src="{{ section.settings.image_before | image_url: width: 1200 }}" alt="Before" class="before-after__image before-after__image--before" loading="lazy" width="1200">
+    {%- endif -%}
+    {%- if section.settings.image_after != blank -%}
+      <img src="{{ section.settings.image_after | image_url: width: 1200 }}" alt="After" class="before-after__image before-after__image--after" loading="lazy" width="1200">
+    {%- endif -%}
+    <input type="range" min="0" max="100" value="{{ section.settings.initial_position }}" class="before-after__slider" data-before-after-slider aria-label="Compare before and after">
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Before / after",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading"},
+    {"type": "image_picker", "id": "image_before", "label": "Before image"},
+    {"type": "image_picker", "id": "image_after", "label": "After image"},
+    {"type": "range", "id": "initial_position", "label": "Initial slider position", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50}
+  ],
+  "presets": [{"name": "Before / after"}]
+}
+{% endschema %}

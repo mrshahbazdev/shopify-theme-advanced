@@ -1,9 +1,11 @@
 {% layout 'theme' %}
 <div class="page-width customer-account">
+  {% assign order_date = order.created_at | date: "%B %d, %Y %I:%M%p" %}
   <h1>{{ 'customer.order.title' | t: name: order.name }}</h1>
-  <p>{{ 'customer.order.date' | t: date: order.created_at | date: "%B %d, %Y %I:%M%p" }}</p>
+  <p>{{ 'customer.order.date' | t: date: order_date }}</p>
   {% if order.cancelled %}
-    <div class="note">{{ 'customer.order.cancelled' | t: date: order.cancelled_at | date: "%B %d, %Y %I:%M%p" }}</div>
+    {% assign cancelled_date = order.cancelled_at | date: "%B %d, %Y %I:%M%p" %}
+    <div class="note">{{ 'customer.order.cancelled' | t: date: cancelled_date }}</div>
   {% endif %}
   <table>
     <thead><tr><th>{{ 'customer.order.product' | t }}</th><th>{{ 'customer.order.sku' | t }}</th><th>{{ 'customer.order.price' | t }}</th><th>{{ 'customer.order.quantity' | t }}</th><th>{{ 'customer.order.total' | t }}</th></tr></thead>

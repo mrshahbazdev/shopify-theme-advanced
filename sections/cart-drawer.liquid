@@ -1,0 +1,29 @@
+<div class="cart-drawer" data-cart-drawer role="dialog" aria-label="{{ 'general.navigation.cart' | t }}">
+  <div class="cart-drawer__overlay js-cart-close"></div>
+  <div class="cart-drawer__content">
+    <div class="cart-drawer__header">
+      <h2>{{ 'general.navigation.cart' | t }}</h2>
+      <button type="button" class="cart-drawer__close js-cart-close" aria-label="{{ 'general.search.close' | t }}">{% render 'icon-close' %}</button>
+    </div>
+    <div class="cart-drawer__items" data-cart-drawer-items>
+      {%- if cart.item_count > 0 -%}
+        {%- for item in cart.items -%}
+          {% render 'cart-item', item: item, index: forloop.index, compact: true %}
+        {%- endfor -%}
+      {%- else -%}
+        <p class="cart-drawer__empty">{{ 'templates.cart.empty' | t }}</p>
+      {%- endif -%}
+    </div>
+    <div class="cart-drawer__footer">
+      <p class="cart-drawer__subtotal">{{ 'sections.cart.subtotal' | t }} <span data-cart-subtotal>{{ cart.total_price | money }}</span></p>
+      <a href="{{ routes.cart_url }}" class="button button--secondary">{{ 'sections.cart.update' | t }}</a>
+      <button type="button" class="button button--primary" data-cart-checkout>{{ 'sections.cart.checkout' | t }}</button>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

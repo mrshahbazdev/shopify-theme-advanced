@@ -1,0 +1,39 @@
+<div class="testimonials testimonials--{{ section.settings.alignment }} section-{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}<h2 class="section-title">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+    <div class="testimonials__grid testimonials__grid--{{ section.blocks.size }}-col">
+      {%- for block in section.blocks -%}
+        <div class="testimonial" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 120 }}" alt="{{ block.settings.author | escape }}" class="testimonial__avatar" loading="lazy" width="120">
+          {%- endif -%}
+          {%- if block.settings.rating > 0 -%}
+            <div class="testimonial__stars" aria-label="{{ block.settings.rating }} stars">
+              {%- for i in (1..block.settings.rating) -%}<span>&#9733;</span>{%- endfor -%}
+            </div>
+          {%- endif -%}
+          <blockquote class="testimonial__quote">{{ block.settings.quote }}</blockquote>
+          <cite class="testimonial__author">{{ block.settings.author | escape }}</cite>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading", "default": "What our customers say"},
+    {"type": "select", "id": "alignment", "label": "Alignment", "options": [{"value": "left", "label": "Left"}, {"value": "center", "label": "Center"}], "default": "center"}
+  ],
+  "blocks": [
+    {"type": "testimonial", "name": "Testimonial", "settings": [
+      {"type": "image_picker", "id": "image", "label": "Avatar"},
+      {"type": "range", "id": "rating", "label": "Star rating", "min": 0, "max": 5, "step": 1, "default": 5},
+      {"type": "richtext", "id": "quote", "label": "Quote", "default": "<p>Great product and fast shipping!</p>"},
+      {"type": "text", "id": "author", "label": "Author", "default": "Happy Customer"}
+    ]}
+  ],
+  "presets": [{"name": "Testimonials", "blocks": {"testimonial-1": {"type": "testimonial"}, "testimonial-2": {"type": "testimonial"}, "testimonial-3": {"type": "testimonial"}}}]
+}
+{% endschema %}

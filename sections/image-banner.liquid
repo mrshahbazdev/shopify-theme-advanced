@@ -8,6 +8,7 @@
         <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image.alt | escape }}" width="800" loading="eager" class="image-banner__image mobile-only" height="{{ section.settings.image.height | times: 1.0 | divided_by: section.settings.image.width | times: 800 | round }}">
       {%- endif -%}
     </div>
+    <div class="image-banner__overlay"></div>
   {%- endif -%}
   <div class="image-banner__content color-{{ section.settings.color_scheme }}">
     <div class="page-width">

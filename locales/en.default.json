@@ -12,7 +12,8 @@
       "cart": "Cart",
       "account": "Account",
       "menu": "Menu",
-      "close": "Close"
+      "close": "Close",
+      "shop_all": "Shop all"
     },
     "pagination": {
       "previous": "Previous",
@@ -129,6 +130,7 @@
   },
   "products": {
     "sold_out": "Sold out",
+    "on_sale": "Sale",
     "unavailable": "Unavailable",
     "add_to_cart": "Add to cart",
     "buy_it_now": "Buy it now",
@@ -150,6 +152,9 @@
       "subtext": "The page you requested does not exist.",
       "continue_shopping": "Continue shopping"
     }
+  },
+  "collections": {
+    "empty": "No products found in this collection."
   },
   "gift_cards": {
     "issued": {

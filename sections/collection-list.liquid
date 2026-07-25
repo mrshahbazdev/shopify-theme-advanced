@@ -11,6 +11,7 @@
             {%- else -%}
               <div class="collection-card__placeholder"></div>
             {%- endif -%}
+            <span class="collection-card__overlay" aria-hidden="true"></span>
             <h3 class="collection-card__title">{{ collection_obj.title | escape }}</h3>
           </a>
         </div>

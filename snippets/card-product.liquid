@@ -1,6 +1,11 @@
 <div class="card-product" data-product-card data-product-handle="{{ product.handle }}">
   <a href="{{ product.url }}" class="card-product__link">
     <div class="card-product__media">
+      {%- if product.compare_at_price > product.price and product.available -%}
+        <span class="card-product__badge">{{ 'products.on_sale' | t }}</span>
+      {%- elsif product.available == false -%}
+        <span class="card-product__badge">{{ 'products.sold_out' | t }}</span>
+      {%- endif -%}
       {%- if product.featured_image != blank -%}
         <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="card-product__image card-product__image--primary" width="600" height="{{ product.featured_image.height | times: 1.0 | divided_by: product.featured_image.width | times: 600 | round }}">
         {%- if product.images[1] != blank -%}

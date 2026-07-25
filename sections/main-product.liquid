@@ -60,7 +60,15 @@
                         {%- for value in option.values -%}
                           <label class="swatch" title="{{ value | escape }}">
                             <input type="radio" name="option{{ forloop.parentloop.index }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-value data-option-index="{{ forloop.parentloop.index0 }}">
-                            <span class="swatch__visual" style="background-color: {{ value | handle }};"></span>
+                            {%- liquid
+                              assign color_value = value | handle
+                              if value contains '#'
+                                assign color_value = value | escape
+                              else
+                                assign color_value = value | handle | replace: '-', ''
+                              endif
+                            -%}
+                            <span class="swatch__visual" style="background-color: {{ color_value }};"></span>
                           </label>
                         {%- endfor -%}
                       </div>

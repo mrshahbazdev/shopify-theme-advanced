@@ -2,31 +2,58 @@
   "sections": {
     "banner": {
       "type": "image-banner",
-      "settings": {}
+      "settings": {
+        "heading": "Discover the new collection",
+        "text": "<p>Curated products for your lifestyle. Shop the latest arrivals with fast, free shipping.</p>",
+        "button_label": "Shop now",
+        "button_link": "/collections/all",
+        "color_scheme": "accent-1",
+        "desktop_content_position": "center"
+      }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
         "heading": "Featured collection",
         "collection": "all",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "show_view_all": true
       }
     },
     "collections": {
       "type": "collection-list",
-      "settings": {}
+      "settings": {
+        "heading": "Shop by collection",
+        "columns_desktop": 3
+      }
     },
     "rich_text": {
       "type": "rich-text",
-      "settings": {}
+      "settings": {
+        "heading": "Why shop with us",
+        "text": "<p>Premium quality, curated collections, and a seamless shopping experience — built for modern brands.</p>",
+        "button_label": "Learn more",
+        "button_link": "/pages/about-us",
+        "alignment": "center"
+      }
     },
     "testimonials": {
       "type": "testimonials",
-      "settings": {}
+      "settings": {
+        "heading": "What our customers say"
+      }
     },
     "countdown": {
       "type": "countdown-timer",
-      "settings": {}
+      "settings": {
+        "heading": "Limited time offer",
+        "text": "Get 20% off selected items. Offer ends soon.",
+        "end_date": "2026-12-31T23:59:59Z",
+        "button_label": "Shop the sale",
+        "button_link": "/collections/all",
+        "color_scheme": "accent-2"
+      }
     }
   },
   "order": [

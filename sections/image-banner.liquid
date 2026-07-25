@@ -1,4 +1,4 @@
-<div class="image-banner image-banner--{{ section.settings.desktop_content_position }}">
+<div class="image-banner image-banner--{{ section.settings.desktop_content_position }} {% if section.settings.image == blank %}image-banner--no-image{% endif %}">
   {%- if section.settings.image != blank -%}
     <div class="image-banner__media {% if section.settings.enable_parallax %}image-banner__media--parallax{% endif %}">
       <img src="{{ section.settings.image | image_url: width: 1920 }}" alt="{{ section.settings.image.alt | escape }}" width="1920" loading="eager" class="image-banner__image desktop-only" height="{{ section.settings.image.height | times: 1.0 | divided_by: section.settings.image.width | times: 1920 | round }}">

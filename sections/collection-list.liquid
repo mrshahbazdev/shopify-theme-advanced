@@ -1,10 +1,26 @@
 <div class="collection-list page-width section-{{ section.id }}">
   {%- if section.settings.heading != blank -%}<h2 class="section-title">{{ section.settings.heading | escape }}</h2>{%- endif -%}
   <div class="collection-grid collection-grid--{{ section.settings.columns_desktop }}-col-desktop collection-grid--{{ section.settings.columns_mobile }}-col-mobile">
-    {%- for block in section.blocks -%}
-      {%- assign collection_obj = collections[block.settings.collection] -%}
-      {%- if collection_obj != blank -%}
-        <div class="collection-card" {{ block.shopify_attributes }}>
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign collection_obj = collections[block.settings.collection] -%}
+        {%- if collection_obj != blank -%}
+          <div class="collection-card" {{ block.shopify_attributes }}>
+            <a href="{{ collection_obj.url }}" class="collection-card__link">
+              {%- if collection_obj.image != blank -%}
+                <img src="{{ collection_obj.image | image_url: width: 600 }}" alt="{{ collection_obj.title | escape }}" loading="lazy" width="600" height="{{ collection_obj.image.height | times: 1.0 | divided_by: collection_obj.image.width | times: 600 | round }}">
+              {%- else -%}
+                <div class="collection-card__placeholder"></div>
+              {%- endif -%}
+              <span class="collection-card__overlay" aria-hidden="true"></span>
+              <h3 class="collection-card__title">{{ collection_obj.title | escape }}</h3>
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for collection_obj in collections limit: section.settings.columns_desktop -%}
+        <div class="collection-card">
           <a href="{{ collection_obj.url }}" class="collection-card__link">
             {%- if collection_obj.image != blank -%}
               <img src="{{ collection_obj.image | image_url: width: 600 }}" alt="{{ collection_obj.title | escape }}" loading="lazy" width="600" height="{{ collection_obj.image.height | times: 1.0 | divided_by: collection_obj.image.width | times: 600 | round }}">
@@ -15,8 +31,8 @@
             <h3 class="collection-card__title">{{ collection_obj.title | escape }}</h3>
           </a>
         </div>
-      {%- endif -%}
-    {%- endfor -%}
+      {%- endfor -%}
+    {%- endif -%}
   </div>
 </div>
 {% schema %}

@@ -147,6 +147,14 @@
     "cart": {
       "empty": "Your cart is empty"
     },
+    "contact": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "send": "Send message",
+      "post_success": "Thanks for contacting us. We'll get back to you soon."
+    },
     "404": {
       "title": "Page not found",
       "subtext": "The page you requested does not exist.",

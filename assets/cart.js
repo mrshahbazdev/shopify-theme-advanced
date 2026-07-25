@@ -3,17 +3,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartItemsContainer = document.querySelector('[data-cart-drawer-items]');
   const cartSubtotalEls = document.querySelectorAll('[data-cart-subtotal]');
   const cartCountEls = document.querySelectorAll('[data-cart-count], .js-cart-count');
+  const toastEl = document.querySelector('[data-toast]');
 
   async function fetchCart() {
     const res = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
     return res.json();
   }
 
+  function showToast(message, type = 'success') {
+    if (!toastEl) return;
+    toastEl.textContent = message;
+    toastEl.className = `toast toast--${type} is-visible`;
+    setTimeout(() => toastEl.classList.remove('is-visible'), 3000);
+  }
+
   function updateCartUI(cart) {
     cartSubtotalEls.forEach(el => el.textContent = formatMoney(cart.total_price));
     cartCountEls.forEach(el => { el.textContent = cart.item_count; el.setAttribute('data-count', cart.item_count); });
     if (!cartItemsContainer) return;
-    if (!cart.items.length) { cartItemsContainer.innerHTML = '<p class="cart-drawer__empty">Your cart is empty</p>'; return; }
+    if (!cart.items.length) { cartItemsContainer.innerHTML = '<p class="cart-drawer__empty">{{ "templates.cart.empty" | t }}</p>'; return; }
     let html = '';
     cart.items.forEach((item, index) => {
       const image = item.image ? `<img src="${item.image.replace(/\?.*$/, '')}" alt="">` : '';
@@ -38,10 +46,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function updateCart(line, quantity) {
-    const body = JSON.stringify({ line, quantity });
-    await fetch('/cart/change.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+    const body = new FormData();
+    body.append('line', line);
+    body.append('quantity', quantity);
+    await fetch('/cart/change.js', { method: 'POST', headers: { 'Accept': 'application/json' }, body });
     const cart = await fetchCart();
     updateCartUI(cart);
+  }
+
+  async function addItem(id, quantity, title) {
+    const body = new FormData();
+    body.append('id', id);
+    body.append('quantity', quantity);
+    const res = await fetch('/cart/add.js', { method: 'POST', headers: { 'Accept': 'application/json' }, body });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.description || 'Add to cart failed');
+    }
+    const cart = await fetchCart();
+    updateCartUI(cart);
+    if (cartDrawer) cartDrawer.classList.add('is-open');
+    showToast(`${title || 'Item'} added to cart`);
   }
 
   async function addToCart(form) {
@@ -49,11 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const id = data.get('id');
     const quantity = Number(data.get('quantity') || 1);
     if (!id) throw new Error('Please select a variant');
-    const res = await fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, quantity }) });
-    if (!res.ok) throw new Error('Add to cart failed');
-    const cart = await fetchCart();
-    updateCartUI(cart);
-    if (cartDrawer) cartDrawer.classList.add('is-open');
+    await addItem(id, quantity, 'Item');
   }
 
   function bindCartItemEvents() {
@@ -87,18 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('[data-quick-add]').forEach(btn => {
-    btn.addEventListener('click', async () => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
       const id = btn.dataset.quickAdd;
       if (!id) return;
       try {
-        const res = await fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, quantity: 1 }) });
-        if (!res.ok) throw new Error('Add to cart failed');
-        const cart = await fetchCart();
-        updateCartUI(cart);
-        if (cartDrawer) cartDrawer.classList.add('is-open');
+        const title = btn.closest('.card-product')?.querySelector('.card-product__title a')?.textContent || 'Item';
+        await addItem(id, 1, title);
       } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
+        showToast(err.message || 'Could not add item', 'error');
       }
     });
   });

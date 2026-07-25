@@ -29,9 +29,12 @@
 .card-product__actions {
   position: absolute; bottom: .9rem; right: .9rem;
   display: flex; gap: .5rem; opacity: 0; transform: translateY(8px);
-  transition: opacity .3s, transform .3s; z-index: 3;
+  transition: opacity .3s, transform .3s; z-index: 5;
 }
 .card-product:hover .card-product__actions { opacity: 1; transform: translateY(0); }
+@media (hover: none) and (pointer: coarse) {
+  .card-product__actions { opacity: 1; transform: translateY(0); }
+}
 .card-product__action {
   width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; color: var(--color-text);
   display: grid; place-items: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,.12);

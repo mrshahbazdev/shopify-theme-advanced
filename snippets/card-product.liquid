@@ -15,14 +15,11 @@
         <div class="card-product__placeholder">{{ product.title | escape }}</div>
       {%- endif -%}
     </a>
-    <div class="card-product__actions">
-      {%- if settings.enable_quick_view -%}
-        <button type="button" class="card-product__action" data-quick-view="{{ product.handle }}" aria-label="{{ 'products.quick_view' | t }}">{% render 'icon-search' %}</button>
-      {%- endif -%}
-      {%- if product.available -%}
+    {%- if product.available -%}
+      <div class="card-product__actions">
         <button type="button" class="card-product__action card-product__action--cart" data-quick-add="{{ product.selected_or_first_available_variant.id }}" aria-label="{{ 'products.add_to_cart' | t }}">{% render 'icon-cart' %}</button>
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
   <div class="card-product__info">
     <h3 class="card-product__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>

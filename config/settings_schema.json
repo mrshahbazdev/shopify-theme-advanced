@@ -99,32 +99,27 @@
       {
         "type": "text",
         "id": "social_facebook_link",
-        "label": "Facebook",
-        "default": ""
+        "label": "Facebook"
       },
       {
         "type": "text",
         "id": "social_instagram_link",
-        "label": "Instagram",
-        "default": ""
+        "label": "Instagram"
       },
       {
         "type": "text",
         "id": "social_twitter_link",
-        "label": "Twitter",
-        "default": ""
+        "label": "Twitter"
       },
       {
         "type": "text",
         "id": "social_youtube_link",
-        "label": "YouTube",
-        "default": ""
+        "label": "YouTube"
       },
       {
         "type": "text",
         "id": "social_tiktok_link",
-        "label": "TikTok",
-        "default": ""
+        "label": "TikTok"
       }
     ]
   },

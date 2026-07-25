@@ -5,8 +5,8 @@
       <h1 class="article-page__title">{{ article.title | escape }}</h1>
       <div class="article-page__meta">
         <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%B %d, %Y' }}</time>
-        <span class="article-page__read-time">{{ article.content | strip_html | split: ' ' | size | divided_by: 200 | plus: 1 }} min read</span>
-        {%- if article.author != blank -%}<span class="article-page__author">By {{ article.author | escape }}</span>{%- endif -%}
+        <span class="article-page__read-time">{{ article.content | strip_html | split: ' ' | size | divided_by: 200 | plus: 1 }} {{ 'templates.article.min_read' | t }}</span>
+        {%- if article.author != blank -%}<span class="article-page__author">{{ 'templates.article.by' | t }} {{ article.author | escape }}</span>{%- endif -%}
       </div>
     </header>
     {%- if article.image != blank -%}
@@ -17,7 +17,7 @@
     <div class="article-page__content rte">{{ article.content }}</div>
     {%- if article.tags.size > 0 -%}
       <div class="article-page__tags">
-        <span>Tags:</span>
+        <span>{{ 'templates.article.tags' | t }}</span>
         {%- for tag in article.tags -%}<span class="article-page__tag-pill">{{ tag | link_to_tag: tag }}</span>{%- endfor -%}
       </div>
     {%- endif -%}
@@ -29,7 +29,7 @@
     {%- endif -%}
     {%- if blog.comments_enabled? -%}
       <div class="article-page__comments">
-        <h2>Comments ({{ article.comments_count }})</h2>
+        <h2>{{ 'templates.article.comments' | t: count: article.comments_count }}</h2>
         {%- if article.comments_count > 0 -%}
           <ul class="article-comments">
             {%- for comment in article.comments -%}
@@ -42,11 +42,11 @@
         {%- endif -%}
         {%- form 'new_comment', article -%}
           <div class="article-form__row">
-            <div class="article-form__field"><label for="CommentAuthor">Name</label><input type="text" id="CommentAuthor" name="comment[author]" value="{{ form.author }}" required></div>
-            <div class="article-form__field"><label for="CommentEmail">Email</label><input type="email" id="CommentEmail" name="comment[email]" value="{{ form.email }}" required></div>
+            <div class="article-form__field"><label for="CommentAuthor">{{ 'templates.article.name' | t }}</label><input type="text" id="CommentAuthor" name="comment[author]" value="{{ form.author }}" required></div>
+            <div class="article-form__field"><label for="CommentEmail">{{ 'templates.article.email' | t }}</label><input type="email" id="CommentEmail" name="comment[email]" value="{{ form.email }}" required></div>
           </div>
-          <div class="article-form__field"><label for="CommentBody">Comment</label><textarea id="CommentBody" name="comment[body]" rows="5" required>{% if form.body %}{{ form.body }}{% endif %}</textarea></div>
-          <button type="submit" class="button button--primary">Post comment</button>
+          <div class="article-form__field"><label for="CommentBody">{{ 'templates.article.comment' | t }}</label><textarea id="CommentBody" name="comment[body]" rows="5" required>{% if form.body %}{{ form.body }}{% endif %}</textarea></div>
+          <button type="submit" class="button button--primary">{{ 'templates.article.post_comment' | t }}</button>
         {%- endform -%}
       </div>
     {%- endif -%}

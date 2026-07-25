@@ -9,10 +9,10 @@
     {%- unless item.variant.title == 'Default Title' -%}<p class="cart-item__variant">{{ item.variant.title | escape }}</p>{%- endunless -%}
     <p class="cart-item__price">{{ item.final_line_price | money }}</p>
     <div class="cart-item__qty">
-      <button type="button" class="cart-item__qty-btn" data-qty-change="-1" data-line="{{ index }}" aria-label="Decrease">-</button>
-      <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line="{{ index }}" class="cart-item__qty-input" aria-label="Quantity">
-      <button type="button" class="cart-item__qty-btn" data-qty-change="1" data-line="{{ index }}" aria-label="Increase">+</button>
+      <button type="button" class="cart-item__qty-btn" data-qty-change="-1" data-line="{{ index }}" aria-label="{{ 'products.decrease_quantity' | t }}">-</button>
+      <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line="{{ index }}" class="cart-item__qty-input" aria-label="{{ 'products.quantity' | t }}">
+      <button type="button" class="cart-item__qty-btn" data-qty-change="1" data-line="{{ index }}" aria-label="{{ 'products.increase_quantity' | t }}">+</button>
     </div>
   </div>
-  <button type="button" class="cart-item__remove" data-line-remove="{{ index }}" aria-label="Remove">{% render 'icon-close' %}</button>
+  <button type="button" class="cart-item__remove" data-line-remove="{{ index }}" aria-label="{{ 'sections.cart.remove' | t }}">{% render 'icon-close' %}</button>
 </div>

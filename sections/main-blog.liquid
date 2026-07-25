@@ -21,7 +21,7 @@
               <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 25 }}</p>
               <div class="blog-card__meta">
                 <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%B %d, %Y' }}</time>
-                <span class="blog-card__read-time">{{ article.content | strip_html | split: ' ' | size | divided_by: 200 | plus: 1 }} min read</span>
+                <span class="blog-card__read-time">{{ article.content | strip_html | split: ' ' | size | divided_by: 200 | plus: 1 }} {{ 'templates.blog.min_read' | t }}</span>
               </div>
             </div>
           </article>

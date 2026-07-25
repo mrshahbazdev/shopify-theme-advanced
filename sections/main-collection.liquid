@@ -9,7 +9,7 @@
       {%- if section.settings.enable_filters -%}
         <div class="collection-toolbar__filters">
           <div class="collection-filters__group">
-            <span class="collection-filters__label">Filter by tag</span>
+            <span class="collection-filters__label">{{ 'templates.collections.filter_by_tag' | t }}</span>
             <div class="collection-filters__tags">
               {%- for tag in collection.all_tags -%}
                 {{ tag | link_to_tag: tag }}
@@ -17,22 +17,22 @@
             </div>
           </div>
           <form action="{{ collection.url }}" method="get" class="collection-filters__price">
-            <span class="collection-filters__label">Price</span>
-            <input type="number" name="filter.v.price.gte" placeholder="Min" aria-label="Minimum price" min="0" value="{{ request.params['filter.v.price.gte'] }}">
+            <span class="collection-filters__label">{{ 'templates.collections.price' | t }}</span>
+            <input type="number" name="filter.v.price.gte" placeholder="{{ 'templates.collections.min' | t }}" aria-label="{{ 'templates.collections.min' | t }}" min="0" value="{{ request.params['filter.v.price.gte'] }}">
             <span class="collection-filters__divider">—</span>
-            <input type="number" name="filter.v.price.lte" placeholder="Max" aria-label="Maximum price" min="0" value="{{ request.params['filter.v.price.lte'] }}">
-            <button type="submit" class="button button--small">Apply</button>
+            <input type="number" name="filter.v.price.lte" placeholder="{{ 'templates.collections.max' | t }}" aria-label="{{ 'templates.collections.max' | t }}" min="0" value="{{ request.params['filter.v.price.lte'] }}">
+            <button type="submit" class="button button--small">{{ 'templates.collections.apply' | t }}</button>
           </form>
           {%- if current_tags.size > 0 or request.params['filter.v.price.gte'] != blank or request.params['filter.v.price.lte'] != blank -%}
-            <a href="{{ collection.url }}" class="collection-filters__clear">Clear all</a>
+            <a href="{{ collection.url }}" class="collection-filters__clear">{{ 'templates.collections.clear_all' | t }}</a>
           {%- endif -%}
         </div>
       {%- endif -%}
       <div class="collection-toolbar__right">
-        <div class="collection-toolbar__count">{{ collection.products_count }} products</div>
+        <div class="collection-toolbar__count">{{ 'templates.collections.products_count' | t: count: collection.products_count }}</div>
         {%- if section.settings.enable_sorting -%}
           <form action="{{ collection.url }}" method="get" class="collection-toolbar__sort">
-            <label for="SortBy" class="visually-hidden">Sort by</label>
+            <label for="SortBy" class="visually-hidden">{{ 'templates.collections.sort_by' | t }}</label>
             <select name="sort_by" id="SortBy" onchange="this.form.submit()">
               {%- for option in collection.sort_options -%}
                 <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>

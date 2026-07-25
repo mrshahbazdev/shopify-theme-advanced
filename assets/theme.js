@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stickyPriceEl) renderPrice(match.price, match.compare_at_price, stickyPriceEl);
         if (submitBtn) {
           submitBtn.disabled = !match.available;
-          submitBtn.textContent = match.available ? (window.Translation && Translation.addToCart) || 'Add to cart' : (window.Translation && Translation.soldOut) || 'Sold out';
+          submitBtn.textContent = match.available ? (window.theme.strings && window.theme.strings.addToCart) || 'Add to cart' : (window.theme.strings && window.theme.strings.soldOut) || 'Sold out';
         }
       }
     }
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const end = new Date(el.dataset.countdownEnd).getTime();
     if (!end) return;
     const display = el.querySelector('[data-countdown-display]');
-    const message = el.dataset.countdownMessage || 'Offer has ended';
+    const message = el.dataset.countdownMessage || (window.theme.strings && window.theme.strings.offerEnded) || 'Offer has ended';
     function tick() {
       const diff = end - Date.now();
       if (diff <= 0) { if (display) display.textContent = message; return; }

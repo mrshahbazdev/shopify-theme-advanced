@@ -25,9 +25,16 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.25rem; }
 .note { padding: 1rem; border-radius: .5rem; background: rgba(0,0,0,.05); }
 .form-success { background: #e6f7e6; color: #1e7e34; }
 button, input, select, textarea { font: inherit; color: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+*:focus:not(:focus-visible) { outline: 0; }
 .visually-hidden {
   position: absolute !important; overflow: hidden; width: 1px; height: 1px; clip: rect(0 0 0 0); white-space: nowrap; border: 0; padding: 0;
 }
+.visually-hidden:focus, .visually-hidden:active {
+  position: static !important; overflow: visible; width: auto; height: auto; clip: auto; white-space: normal; background: var(--color-primary); color: var(--color-text-inverse); padding: .5rem .75rem; z-index: 100;
+}
+.skip-to-content-link { position: absolute; top: -100%; left: 1rem; background: var(--color-primary); color: var(--color-text-inverse); padding: .5rem .75rem; border-radius: .4rem; z-index: 100; text-decoration: none; font-weight: 600; }
+.skip-to-content-link:focus { top: 1rem; }
 .page-width { width: min(var(--page-width), 92%); margin-inline: auto; }
 
 /* Buttons */
@@ -236,6 +243,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .swatch__visual { display: block; width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(0,0,0,.1); transition: transform .15s, box-shadow .15s; }
 .swatch:hover .swatch__visual { transform: scale(1.08); }
 .swatch input:checked + .swatch__visual { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-primary); }
+.swatch input:focus-visible + .swatch__visual { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-accent); }
 .product__trust { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; font-size: .875rem; color: rgba(0,0,0,.65); }
 .product__trust li { display: inline-flex; align-items: center; gap: .4rem; }
 .product__trust svg { color: var(--color-accent); }

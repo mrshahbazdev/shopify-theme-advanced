@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartSubtotalEls = document.querySelectorAll('[data-cart-subtotal]');
   const cartCountEls = document.querySelectorAll('[data-cart-count], .js-cart-count');
   const toastEl = document.querySelector('[data-toast]');
+  const toastTemplate = toastEl?.dataset.addedToCart || 'added to cart';
+  const cartEmptyText = cartItemsContainer?.dataset.cartEmpty || 'Your cart is empty';
+  const removeLabel = cartDrawer?.dataset.removeLabel || 'Remove';
+  const quantityLabel = cartDrawer?.dataset.quantityLabel || 'Quantity';
+  const selectVariantError = cartDrawer?.dataset.errorSelectVariant || 'Please select a variant';
+  const addErrorText = cartDrawer?.dataset.errorAdd || 'Could not add item';
+  const defaultItem = (window.theme && window.theme.strings && window.theme.strings.item) || 'Item';
 
   async function fetchCart() {
     const res = await fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
@@ -21,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cartSubtotalEls.forEach(el => el.textContent = formatMoney(cart.total_price));
     cartCountEls.forEach(el => { el.textContent = cart.item_count; el.setAttribute('data-count', cart.item_count); });
     if (!cartItemsContainer) return;
-    if (!cart.items.length) { cartItemsContainer.innerHTML = '<p class="cart-drawer__empty">{{ "templates.cart.empty" | t }}</p>'; return; }
+    if (!cart.items.length) { cartItemsContainer.innerHTML = `<p class="cart-drawer__empty">${cartEmptyText}</p>`; return; }
     let html = '';
     cart.items.forEach((item, index) => {
       const image = item.image ? `<img src="${item.image.replace(/\?.*$/, '')}" alt="">` : '';
@@ -33,12 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
           ${item.variant_title && item.variant_title !== 'Default Title' ? `<p class="cart-item__variant">${item.variant_title}</p>` : ''}
           <p class="cart-item__price">${formatMoney(item.final_line_price)}</p>
           <div class="cart-item__qty">
-            <button type="button" class="cart-item__qty-btn" data-qty-change="-1" data-line="${index + 1}">-</button>
-            <input type="number" value="${item.quantity}" min="0" data-line="${index + 1}" class="cart-item__qty-input" aria-label="Quantity">
-            <button type="button" class="cart-item__qty-btn" data-qty-change="1" data-line="${index + 1}">+</button>
+            <button type="button" class="cart-item__qty-btn" data-qty-change="-1" data-line="${index + 1}" aria-label="-">-</button>
+            <input type="number" value="${item.quantity}" min="0" data-line="${index + 1}" class="cart-item__qty-input" aria-label="${quantityLabel}">
+            <button type="button" class="cart-item__qty-btn" data-qty-change="1" data-line="${index + 1}" aria-label="+">+</button>
           </div>
         </div>
-        <button type="button" class="cart-item__remove" data-line-remove="${index + 1}" aria-label="Remove">×</button>
+        <button type="button" class="cart-item__remove" data-line-remove="${index + 1}" aria-label="${removeLabel}">×</button>
       </div>`;
     });
     cartItemsContainer.innerHTML = html;
@@ -61,20 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const res = await fetch('/cart/add.js', { method: 'POST', headers: { 'Accept': 'application/json' }, body });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.description || 'Add to cart failed');
+      throw new Error(err.description || addErrorText);
     }
     const cart = await fetchCart();
     updateCartUI(cart);
     if (cartDrawer) cartDrawer.classList.add('is-open');
-    showToast(`${title || 'Item'} added to cart`);
+    showToast(`${title || defaultItem} ${toastTemplate}`);
   }
 
   async function addToCart(form) {
     const data = new FormData(form);
     const id = data.get('id');
     const quantity = Number(data.get('quantity') || 1);
-    if (!id) throw new Error('Please select a variant');
-    await addItem(id, quantity, 'Item');
+    if (!id) throw new Error(selectVariantError);
+    const productTitle = document.querySelector('.product__title')?.textContent?.trim() || (window.theme && window.theme.strings && window.theme.strings.item) || 'Item';
+    await addItem(id, quantity, productTitle);
   }
 
   function bindCartItemEvents() {
@@ -102,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try { await addToCart(form); }
       catch (err) {
         const errorEl = form.querySelector('[data-form-error]');
-        if (errorEl) errorEl.textContent = err.message || 'Could not add item.';
+        if (errorEl) errorEl.textContent = err.message || addErrorText;
       }
     });
   });
@@ -113,10 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = btn.dataset.quickAdd;
       if (!id) return;
       try {
-        const title = btn.closest('.card-product')?.querySelector('.card-product__title a')?.textContent || 'Item';
+        const title = btn.closest('.card-product')?.querySelector('.card-product__title a')?.textContent || defaultItem;
         await addItem(id, 1, title);
       } catch (err) {
-        showToast(err.message || 'Could not add item', 'error');
+        showToast(err.message || addErrorText, 'error');
       }
     });
   });

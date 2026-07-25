@@ -1,5 +1,5 @@
 <div class="cart-page page-width section-{{ section.id }}">
-  <h1>Shopping cart</h1>
+  <h1>{{ 'sections.cart.title' | t }}</h1>
   {%- if cart.item_count > 0 -%}
     {% form 'cart', cart %}
       <div class="cart-items" data-cart-items>
@@ -8,10 +8,10 @@
         {%- endfor -%}
       </div>
       <div class="cart-footer">
-        <p class="cart-footer__note"><label for="CartNote">Special instructions</label><textarea name="note" id="CartNote">{{ cart.note }}</textarea></p>
+        <p class="cart-footer__note"><label for="CartNote">{{ 'sections.cart.special_instructions' | t }}</label><textarea name="note" id="CartNote">{{ cart.note }}</textarea></p>
         <div class="cart-footer__totals">
           <p class="cart-footer__subtotal">{{ 'sections.cart.subtotal' | t }} <span data-cart-subtotal>{{ cart.total_price | money }}</span></p>
-          <p class="cart-footer__taxes">Taxes and shipping calculated at checkout.</p>
+          <p class="cart-footer__taxes">{{ 'sections.cart.taxes_shipping' | t }}</p>
           <button type="submit" name="update" class="button button--secondary">{{ 'sections.cart.update' | t }}</button>
           <button type="submit" name="checkout" class="button button--primary">{{ 'sections.cart.checkout' | t }}</button>
         </div>

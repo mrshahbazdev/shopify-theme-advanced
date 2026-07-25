@@ -1,9 +1,9 @@
 <div class="social-sharing">
-  <span class="social-sharing__label">Share</span>
+  <span class="social-sharing__label">{{ 'general.accessibility.share' | t }}</span>
   <ul class="social-sharing__list">
-    <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ share_permalink | url_encode }}" target="_blank" rel="noopener" aria-label="Share on Facebook" class="social-sharing__link social-sharing__link--facebook">{% render 'icon-facebook' %}</a></li>
-    <li><a href="https://twitter.com/intent/tweet?text={{ share_title | url_encode }}&url={{ share_permalink | url_encode }}" target="_blank" rel="noopener" aria-label="Share on Twitter" class="social-sharing__link social-sharing__link--twitter">{% render 'icon-twitter' %}</a></li>
-    <li><a href="https://pinterest.com/pin/create/button/?url={{ share_permalink | url_encode }}&media={{ share_image | image_url: width: 800 | url_encode }}&description={{ share_title | url_encode }}" target="_blank" rel="noopener" aria-label="Share on Pinterest" class="social-sharing__link social-sharing__link--pinterest">{% render 'icon-pinterest' %}</a></li>
-    <li><a href="mailto:?subject={{ share_title | url_encode }}&body={{ share_permalink | url_encode }}" aria-label="Share by email" class="social-sharing__link social-sharing__link--email">{% render 'icon-email' %}</a></li>
+    <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ share_permalink | url_encode }}" target="_blank" rel="noopener" aria-label="{{ 'general.accessibility.share_on_facebook' | t }}" class="social-sharing__link social-sharing__link--facebook">{% render 'icon-facebook' %}</a></li>
+    <li><a href="https://twitter.com/intent/tweet?text={{ share_title | url_encode }}&url={{ share_permalink | url_encode }}" target="_blank" rel="noopener" aria-label="{{ 'general.accessibility.share_on_twitter' | t }}" class="social-sharing__link social-sharing__link--twitter">{% render 'icon-twitter' %}</a></li>
+    <li><a href="https://pinterest.com/pin/create/button/?url={{ share_permalink | url_encode }}&media={{ share_image | image_url: width: 800 | url_encode }}&description={{ share_title | url_encode }}" target="_blank" rel="noopener" aria-label="{{ 'general.accessibility.share_on_pinterest' | t }}" class="social-sharing__link social-sharing__link--pinterest">{% render 'icon-pinterest' %}</a></li>
+    <li><a href="mailto:?subject={{ share_title | url_encode }}&body={{ share_permalink | url_encode }}" aria-label="{{ 'general.accessibility.share_by_email' | t }}" class="social-sharing__link social-sharing__link--email">{% render 'icon-email' %}</a></li>
   </ul>
 </div>

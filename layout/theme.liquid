@@ -21,7 +21,14 @@
     window.theme = {
       routes: {{ routes | json }},
       moneyFormat: {{ shop.money_format | json }},
-      moneyWithCurrency: {{ shop.money_with_currency_format | json }}
+      moneyWithCurrency: {{ shop.money_with_currency_format | json }},
+      strings: {
+        addToCart: {{ 'products.add_to_cart' | t | json }},
+        soldOut: {{ 'products.sold_out' | t | json }},
+        unavailable: {{ 'products.unavailable' | t | json }},
+        offerEnded: {{ 'products.general.offer_ended' | t | default: 'Offer has ended' | json }},
+        item: {{ 'products.general.item' | t | default: 'Item' | json }}
+      }
     };
   </script>
   {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -43,8 +50,8 @@
   {% sections 'footer-group' %}
   {% sections 'overlay-group' %}
   {% if settings.enable_back_to_top %}
-    <button type="button" class="back-to-top js-back-to-top" aria-label="Back to top">&uarr;</button>
+    <button type="button" class="back-to-top js-back-to-top" aria-label="{{ 'general.navigation.back_to_top' | t }}">&uarr;</button>
   {% endif %}
-  <div class="toast" data-toast></div>
+  <div class="toast" data-toast data-added-to-cart="{{ 'sections.cart.added_to_cart' | t }}"></div>
 </body>
 </html>

@@ -3,10 +3,10 @@
     {%- if section.settings.heading != blank -%}<h2 class="countdown-timer__heading">{{ section.settings.heading | escape }}</h2>{%- endif -%}
     {%- if section.settings.text != blank -%}<p class="countdown-timer__text">{{ section.settings.text | escape }}</p>{%- endif -%}
     <div class="countdown-timer__display" data-countdown-display>
-      <div><span data-days>00</span><small>Days</small></div>
-      <div><span data-hours>00</span><small>Hrs</small></div>
-      <div><span data-minutes>00</span><small>Mins</small></div>
-      <div><span data-seconds>00</span><small>Secs</small></div>
+      <div><span data-days>00</span><small>{{ 'sections.countdown.days' | t }}</small></div>
+      <div><span data-hours>00</span><small>{{ 'sections.countdown.hours' | t }}</small></div>
+      <div><span data-minutes>00</span><small>{{ 'sections.countdown.minutes' | t }}</small></div>
+      <div><span data-seconds>00</span><small>{{ 'sections.countdown.seconds' | t }}</small></div>
     </div>
     {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
       <a href="{{ section.settings.button_link }}" class="button button--primary">{{ section.settings.button_label | escape }}</a>

@@ -1,5 +1,5 @@
 {% if section.settings.text != blank %}
-  <div class="announcement-bar color-{{ section.settings.color_scheme }}" role="region" aria-label="Announcement">
+  <div class="announcement-bar color-{{ section.settings.color_scheme }}" role="region" aria-label="{{ 'general.accessibility.announcement' | t }}">
     <div class="page-width announcement-bar__inner">
       {%- if section.settings.link != blank -%}
         <a href="{{ section.settings.link }}" class="announcement-bar__link">

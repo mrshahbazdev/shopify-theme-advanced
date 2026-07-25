@@ -2,12 +2,12 @@
   {%- if section.settings.heading != blank -%}<h2 class="section-title">{{ section.settings.heading | escape }}</h2>{%- endif -%}
   <div class="before-after__container" style="--after-clip: {{ section.settings.initial_position }}%;">
     {%- if section.settings.image_before != blank -%}
-      <img src="{{ section.settings.image_before | image_url: width: 1200 }}" alt="Before" class="before-after__image before-after__image--before" loading="lazy" width="1200" height="{{ section.settings.image_before.height | times: 1.0 | divided_by: section.settings.image_before.width | times: 1200 | round }}">
+      <img src="{{ section.settings.image_before | image_url: width: 1200 }}" alt="{{ 'products.media.before' | t }}" class="before-after__image before-after__image--before" loading="lazy" width="1200" height="{{ section.settings.image_before.height | times: 1.0 | divided_by: section.settings.image_before.width | times: 1200 | round }}">
     {%- endif -%}
     {%- if section.settings.image_after != blank -%}
-      <img src="{{ section.settings.image_after | image_url: width: 1200 }}" alt="After" class="before-after__image before-after__image--after" loading="lazy" width="1200" height="{{ section.settings.image_after.height | times: 1.0 | divided_by: section.settings.image_after.width | times: 1200 | round }}">
+      <img src="{{ section.settings.image_after | image_url: width: 1200 }}" alt="{{ 'products.media.after' | t }}" class="before-after__image before-after__image--after" loading="lazy" width="1200" height="{{ section.settings.image_after.height | times: 1.0 | divided_by: section.settings.image_after.width | times: 1200 | round }}">
     {%- endif -%}
-    <input type="range" min="0" max="100" value="{{ section.settings.initial_position }}" class="before-after__slider" data-before-after-slider aria-label="Compare before and after">
+    <input type="range" min="0" max="100" value="{{ section.settings.initial_position }}" class="before-after__slider" data-before-after-slider aria-label="{{ 'general.accessibility.compare_before_after' | t }}">
   </div>
 </div>
 {% schema %}

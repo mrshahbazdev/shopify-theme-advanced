@@ -8,7 +8,7 @@
       {%- endfor -%}
     </div>
     {%- if section.settings.show_view_all -%}
-      <a href="{{ collection_obj.url }}" class="button button--secondary featured-collection__view-all">View all</a>
+      <a href="{{ collection_obj.url }}" class="button button--secondary featured-collection__view-all">{{ 'sections.featured_collection.view_all' | t }}</a>
     {%- endif -%}
   {%- else -%}
     <div class="featured-collection__empty">

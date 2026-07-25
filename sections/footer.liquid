@@ -51,7 +51,7 @@
           {%- if settings.social_tiktok_link != blank -%}<a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon-tiktok' %}</a>{%- endif -%}
         </div>
       {%- endif -%}
-      <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}. All rights reserved.</p>
+      <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}. {{ 'sections.footer.all_rights_reserved' | t }}</p>
       <div class="footer__payment-icons">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'icon' }}{% endfor %}</div>
     </div>
   </div>

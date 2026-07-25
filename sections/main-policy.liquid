@@ -2,7 +2,7 @@
   <div class="page-width">
     <div class="policy-page__layout">
       <aside class="policy-page__sidebar">
-        <h2 class="policy-page__sidebar-title">Policies</h2>
+        <h2 class="policy-page__sidebar-title">{{ 'templates.policy.policies' | t }}</h2>
         <nav class="policy-page__menu">
           {%- for policy in shop.policies -%}
             <a href="{{ policy.url }}" class="policy-page__menu-link {% if request.path == policy.url %}policy-page__menu-link--active{% endif %}">{{ policy.title | escape }}</a>

@@ -1,4 +1,4 @@
-<div class="popup popup--newsletter {% unless section.settings.enabled %}hidden{% endunless %}" data-newsletter-popup data-delay="{{ section.settings.delay }}" data-frequency="{{ section.settings.frequency }}" role="dialog" aria-label="Newsletter">
+<div class="popup popup--newsletter {% unless section.settings.enabled %}hidden{% endunless %}" data-newsletter-popup data-delay="{{ section.settings.delay }}" data-frequency="{{ section.settings.frequency }}" role="dialog" aria-label="{{ 'general.accessibility.newsletter' | t }}">
   <div class="popup__overlay js-popup-close"></div>
   <div class="popup__content">
     <button type="button" class="popup__close js-popup-close" aria-label="{{ 'general.search.close' | t }}">{% render 'icon-close' %}</button>
@@ -10,7 +10,7 @@
     {% form 'customer', class: 'popup__form' %}
       {{ form.errors | default_errors }}
       <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" required>
-      <button type="submit" class="button button--primary">{{ section.settings.button_label | default: 'Subscribe' | escape }}</button>
+      <button type="submit" class="button button--primary">{{ section.settings.button_label | default: 'general.newsletter_form.submit' | t | escape }}</button>
     {% endform %}
   </div>
 </div>

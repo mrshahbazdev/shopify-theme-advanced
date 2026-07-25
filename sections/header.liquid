@@ -15,7 +15,7 @@
         <span class="h2">{{ shop.name }}</span>
       {%- endif -%}
     </a>
-    <nav class="header__nav desktop-only" aria-label="Main navigation">
+    <nav class="header__nav desktop-only" aria-label="{{ 'general.navigation.main_navigation' | t }}">
       <ul class="header__menu">
         {%- if menu_obj -%}
         {%- for link in menu_obj.links -%}
@@ -51,7 +51,7 @@
       <div class="page-width">
         <predictive-search class="predictive-search" data-base-url="{{ routes.search_url }}">
           <form action="{{ routes.search_url }}" method="get" role="search" class="header__search-form">
-            <input type="search" name="q" placeholder="{{ 'general.search.search' | t }}" class="header__search-input" data-predictive-search-input>
+            <input type="search" name="q" placeholder="{{ 'general.search.search' | t }}" aria-label="{{ 'general.search.search' | t }}" class="header__search-input" data-predictive-search-input>
             <button type="submit" class="button button--primary" aria-label="{{ 'general.search.search' | t }}">{% render 'icon-search' %}</button>
           </form>
           <div class="predictive-search__results" data-predictive-search-results aria-live="polite"></div>

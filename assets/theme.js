@@ -104,6 +104,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     optionInputs.forEach(input => input.addEventListener('change', updateVariant));
 
+    // Quantity stepper
+    const qtyDecrement = productForm.querySelector('[data-qty-decrement]');
+    const qtyIncrement = productForm.querySelector('[data-qty-increment]');
+    const qtyInput = productForm.querySelector('[data-quantity-input]');
+    if (qtyDecrement && qtyInput) {
+      qtyDecrement.addEventListener('click', () => { qtyInput.value = Math.max(1, parseInt(qtyInput.value || 1, 10) - 1); });
+    }
+    if (qtyIncrement && qtyInput) {
+      qtyIncrement.addEventListener('click', () => { qtyInput.value = parseInt(qtyInput.value || 1, 10) + 1; });
+    }
+
     // Sticky ATC
     const stickyATC = document.querySelector('[data-sticky-atc]');
     const stickyAdd = document.querySelector('[data-sticky-add]');

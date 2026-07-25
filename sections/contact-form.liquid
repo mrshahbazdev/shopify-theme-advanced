@@ -8,7 +8,7 @@
       <div class="contact-page__form-wrapper">
         {%- form 'contact', class: 'contact-form' -%}
           {%- if form.posted_successfully? -%}
-            <p class="contact-form__success">{{ section.settings.success_message | default: 'Thanks for contacting us. We\'ll get back to you soon.' }}</p>
+            <p class="contact-form__success">{{ section.settings.success_message | default: "Thanks for contacting us. We'll get back to you soon." }}</p>
           {%- endif -%}
           {%- if form.errors -%}
             <ul class="contact-form__errors">

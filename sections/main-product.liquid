@@ -3,37 +3,39 @@
   <div class="product-page__grid">
     <div class="product-page__media" data-product-media>
       {%- if product.media.size > 0 -%}
-        <div class="product-media__stage">
-          {%- for media in product.media -%}
-            <div class="product-media__item {% if forloop.first %}product-media__item--active{% endif %}" data-media-id="{{ media.id }}">
-              {%- case media.media_type -%}
-                {%- when 'image' -%}
-                  <div class="product-media__zoom">
-                    <img src="{{ media | image_url: width: 1600 }}" alt="{{ media.alt | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" width="1600" height="{{ media.preview_image.height | times: 1.0 | divided_by: media.preview_image.width | times: 1600 | round }}">
-                  </div>
-                {%- when 'video' -%}
-                  {{ media | video_tag: controls: true, class: 'product-media__video' }}
-                {%- when 'external_video' -%}
-                  {{ media | external_video_tag: class: 'product-media__video' }}
-                {%- when 'model' -%}
-                  {{ media | model_viewer_tag }}
-              {%- endcase -%}
-            </div>
-          {%- endfor -%}
-        </div>
-        {%- if product.media.size > 1 -%}
-          <div class="product-media__thumbnails">
+        <div class="product-media__wrapper {% if product.media.size > 1 %}product-media__wrapper--has-thumbs{% endif %}">
+          <div class="product-media__stage">
             {%- for media in product.media -%}
-              <button type="button" class="product-media__thumb {% if forloop.first %}product-media__thumb--active{% endif %}" data-media-id="{{ media.id }}" aria-label="View media {{ forloop.index }}">
-                {%- if media.media_type == 'image' -%}
-                  <img src="{{ media | image_url: width: 160 }}" alt="" loading="lazy" width="160" height="{{ media.preview_image.height | times: 1.0 | divided_by: media.preview_image.width | times: 160 | round }}">
-                {%- else -%}
-                  <span class="product-media__thumb-icon">Video</span>
-                {%- endif -%}
-              </button>
+              <div class="product-media__item {% if forloop.first %}product-media__item--active{% endif %}" data-media-id="{{ media.id }}">
+                {%- case media.media_type -%}
+                  {%- when 'image' -%}
+                    <button type="button" class="product-media__zoom" data-lightbox-open aria-label="Open image">
+                      <img src="{{ media | image_url: width: 1600 }}" alt="{{ media.alt | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" width="1600" height="{{ media.preview_image.height | times: 1.0 | divided_by: media.preview_image.width | times: 1600 | round }}">
+                    </button>
+                  {%- when 'video' -%}
+                    {{ media | video_tag: controls: true, class: 'product-media__video' }}
+                  {%- when 'external_video' -%}
+                    {{ media | external_video_tag: class: 'product-media__video' }}
+                  {%- when 'model' -%}
+                    {{ media | model_viewer_tag }}
+                {%- endcase -%}
+              </div>
             {%- endfor -%}
           </div>
-        {%- endif -%}
+          {%- if product.media.size > 1 -%}
+            <div class="product-media__thumbnails product-media__thumbnails--vertical">
+              {%- for media in product.media -%}
+                <button type="button" class="product-media__thumb {% if forloop.first %}product-media__thumb--active{% endif %}" data-media-id="{{ media.id }}" aria-label="View media {{ forloop.index }}">
+                  {%- if media.media_type == 'image' -%}
+                    <img src="{{ media | image_url: width: 160 }}" alt="" loading="lazy" width="160" height="{{ media.preview_image.height | times: 1.0 | divided_by: media.preview_image.width | times: 160 | round }}">
+                  {%- else -%}
+                    <span class="product-media__thumb-icon">Video</span>
+                  {%- endif -%}
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
       {%- endif -%}
     </div>
     <div class="product-page__info" {% if section.settings.enable_sticky_atc %}data-sticky-info{% endif %}>
@@ -158,6 +160,12 @@
     </div>
   </div>
 </div>
+{%- if product.media.size > 0 -%}
+<div class="product-lightbox" data-lightbox>
+  <button type="button" class="product-lightbox__close" data-lightbox-close aria-label="Close">&times;</button>
+  <img src="{{ product.media.first | image_url: width: 1600 }}" alt="{{ product.media.first.alt | escape }}" class="product-lightbox__img" data-lightbox-img width="1600" height="{{ product.media.first.preview_image.height | times: 1.0 | divided_by: product.media.first.preview_image.width | times: 1600 | round }}">
+</div>
+{%- endif -%}
 {%- if section.settings.enable_sticky_atc -%}
   <div class="product-sticky-atc" data-sticky-atc>
     <div class="page-width product-sticky-atc__inner">

@@ -86,6 +86,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  document.querySelectorAll('[data-quick-add]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.quickAdd;
+      if (!id) return;
+      try {
+        const res = await fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, quantity: 1 }) });
+        if (!res.ok) throw new Error('Add to cart failed');
+        const cart = await fetchCart();
+        updateCartUI(cart);
+        if (cartDrawer) cartDrawer.classList.add('is-open');
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      }
+    });
+  });
+
   document.querySelectorAll('[data-cart-checkout]').forEach(btn => {
     btn.addEventListener('click', () => window.location.href = '/checkout');
   });

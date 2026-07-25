@@ -1,0 +1,11 @@
+{% layout 'theme' %}
+<div class="page-width gift-card">
+  <h1>{{ 'gift_cards.issued.title' | t }}</h1>
+  {% if gift_card.expired != true %}
+    <div class="gift-card__balance">{{ gift_card.balance | money }}</div>
+    <p class="gift-card__redeem">{{ 'gift_cards.issued.redeem' | t }}</p>
+    <div class="gift-card__code">{{ gift_card.code }}</div>
+  {% else %}
+    <p>{{ 'gift_cards.issued.expired' | t }}</p>
+  {% endif %}
+</div>

@@ -150,5 +150,12 @@
       "subtext": "The page you requested does not exist.",
       "continue_shopping": "Continue shopping"
     }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Gift card",
+      "redeem": "Use this code at checkout to redeem your gift card.",
+      "expired": "This gift card has expired."
+    }
   }
 }

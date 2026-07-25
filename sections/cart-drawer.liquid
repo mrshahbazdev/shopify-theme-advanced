@@ -1,11 +1,11 @@
-<div class="cart-drawer" data-cart-drawer role="dialog" aria-label="{{ 'general.navigation.cart' | t }}">
+<div class="cart-drawer" data-cart-drawer role="dialog" aria-label="{{ 'general.navigation.cart' | t }}" data-remove-label="{{ 'sections.cart.remove' | t }}" data-quantity-label="{{ 'products.quantity' | t }}" data-error-select-variant="{{ 'products.general.select_variant' | t }}" data-error-add="{{ 'sections.cart.add_error' | t }}">
   <div class="cart-drawer__overlay js-cart-close"></div>
   <div class="cart-drawer__content">
     <div class="cart-drawer__header">
       <h2>{{ 'general.navigation.cart' | t }}</h2>
       <button type="button" class="cart-drawer__close js-cart-close" aria-label="{{ 'general.search.close' | t }}">{% render 'icon-close' %}</button>
     </div>
-    <div class="cart-drawer__items" data-cart-drawer-items>
+    <div class="cart-drawer__items" data-cart-drawer-items data-cart-empty="{{ 'templates.cart.empty' | t }}">
       {%- if cart.item_count > 0 -%}
         {%- for item in cart.items -%}
           {% render 'cart-item', item: item, index: forloop.index, compact: true %}

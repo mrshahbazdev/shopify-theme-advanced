@@ -1,20 +1,27 @@
 <div class="card-product" data-product-card data-product-handle="{{ product.handle }}">
-  <a href="{{ product.url }}" class="card-product__link">
-    <div class="card-product__media">
+  <div class="card-product__media">
+    <a href="{{ product.url }}" class="card-product__link">
+      {%- if product.compare_at_price > product.price and product.available -%}
+        <span class="card-product__badge">{{ 'products.on_sale' | t }}</span>
+      {%- elsif product.available == false -%}
+        <span class="card-product__badge card-product__badge--sold">{{ 'products.sold_out' | t }}</span>
+      {%- endif -%}
       {%- if product.featured_image != blank -%}
-        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="card-product__image card-product__image--primary" width="600">
+        <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" class="card-product__image card-product__image--primary" width="600" height="{{ product.featured_image.height | times: 1.0 | divided_by: product.featured_image.width | times: 600 | round }}">
         {%- if product.images[1] != blank -%}
-          <img src="{{ product.images[1] | image_url: width: 600 }}" alt="" loading="lazy" class="card-product__image card-product__image--hover" width="600">
+          <img src="{{ product.images[1] | image_url: width: 600 }}" alt="" loading="lazy" class="card-product__image card-product__image--hover" width="600" height="{{ product.images[1].height | times: 1.0 | divided_by: product.images[1].width | times: 600 | round }}">
         {%- endif -%}
       {%- else -%}
         <div class="card-product__placeholder">{{ product.title | escape }}</div>
       {%- endif -%}
-    </div>
-  </a>
-  <div class="card-product__info">
-    {%- if settings.enable_quick_view -%}
-      <button type="button" class="card-product__quick-view" data-quick-view="{{ product.handle }}">{{ 'products.quick_view' | t }}</button>
+    </a>
+    {%- if product.available -%}
+      <div class="card-product__actions">
+        <button type="button" class="card-product__action card-product__action--cart" data-quick-add="{{ product.selected_or_first_available_variant.id }}" aria-label="{{ 'products.add_to_cart' | t }}">{% render 'icon-cart' %}</button>
+      </div>
     {%- endif -%}
+  </div>
+  <div class="card-product__info">
     <h3 class="card-product__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
     {%- if product.vendor != blank -%}<p class="card-product__vendor">{{ product.vendor | escape }}</p>{%- endif -%}
     <div class="card-product__price">{% render 'price', product: product %}</div>

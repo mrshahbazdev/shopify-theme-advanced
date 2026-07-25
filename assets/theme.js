@@ -97,12 +97,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stickyPriceEl) renderPrice(match.price, match.compare_at_price, stickyPriceEl);
         if (submitBtn) {
           submitBtn.disabled = !match.available;
-          submitBtn.textContent = match.available ? (window.Translation && Translation.addToCart) || 'Add to cart' : (window.Translation && Translation.soldOut) || 'Sold out';
+          submitBtn.textContent = match.available ? (window.theme.strings && window.theme.strings.addToCart) || 'Add to cart' : (window.theme.strings && window.theme.strings.soldOut) || 'Sold out';
         }
       }
     }
 
     optionInputs.forEach(input => input.addEventListener('change', updateVariant));
+
+    // Quantity stepper
+    const qtyDecrement = productForm.querySelector('[data-qty-decrement]');
+    const qtyIncrement = productForm.querySelector('[data-qty-increment]');
+    const qtyInput = productForm.querySelector('[data-quantity-input]');
+    if (qtyDecrement && qtyInput) {
+      qtyDecrement.addEventListener('click', () => { qtyInput.value = Math.max(1, parseInt(qtyInput.value || 1, 10) - 1); });
+    }
+    if (qtyIncrement && qtyInput) {
+      qtyIncrement.addEventListener('click', () => { qtyInput.value = parseInt(qtyInput.value || 1, 10) + 1; });
+    }
 
     // Sticky ATC
     const stickyATC = document.querySelector('[data-sticky-atc]');
@@ -116,17 +127,42 @@ document.addEventListener('DOMContentLoaded', () => {
       stickyAdd.addEventListener('click', () => productForm.dispatchEvent(new Event('submit', { cancelable: true })));
     }
 
-    // Product media thumbnails
-    const mediaItems = document.querySelectorAll('[data-media-id]');
+    // Product media thumbnails & lightbox
+    const mediaItems = document.querySelectorAll('.product-media__item');
     const thumbs = document.querySelectorAll('.product-media__thumb');
+    const lightbox = document.querySelector('[data-lightbox]');
+    const lightboxImg = document.querySelector('[data-lightbox-img]');
+    const lightboxClose = document.querySelector('[data-lightbox-close]');
+
+    function updateLightboxSrc() {
+      if (!lightboxImg) return;
+      const active = document.querySelector('.product-media__item--active img');
+      if (active) { lightboxImg.src = active.src; lightboxImg.alt = active.alt; }
+    }
+
     thumbs.forEach(thumb => {
       thumb.addEventListener('click', () => {
         const id = thumb.dataset.mediaId;
         thumbs.forEach(t => t.classList.remove('product-media__thumb--active'));
         thumb.classList.add('product-media__thumb--active');
         mediaItems.forEach(item => item.classList.toggle('product-media__item--active', item.dataset.mediaId === id));
+        updateLightboxSrc();
       });
     });
+
+    document.querySelectorAll('[data-lightbox-open]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        updateLightboxSrc();
+        if (lightbox) lightbox.classList.add('is-open');
+      });
+    });
+
+    if (lightbox) {
+      lightbox.addEventListener('click', (e) => { if (e.target === lightbox && lightbox) lightbox.classList.remove('is-open'); });
+    }
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', () => { if (lightbox) lightbox.classList.remove('is-open'); });
+    }
   }
 
   // Before / after slider
@@ -145,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const end = new Date(el.dataset.countdownEnd).getTime();
     if (!end) return;
     const display = el.querySelector('[data-countdown-display]');
-    const message = el.dataset.countdownMessage || 'Offer has ended';
+    const message = el.dataset.countdownMessage || (window.theme.strings && window.theme.strings.offerEnded) || 'Offer has ended';
     function tick() {
       const diff = end - Date.now();
       if (diff <= 0) { if (display) display.textContent = message; return; }

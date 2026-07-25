@@ -4,7 +4,11 @@
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
-      "settings": {}
+      "settings": {
+        "text": "Welcome to our store — Free shipping over $50",
+        "link": "/collections/all",
+        "color_scheme": "accent-2"
+      }
     },
     "header": {
       "type": "header",

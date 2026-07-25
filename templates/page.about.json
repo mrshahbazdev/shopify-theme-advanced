@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-content",
+      "blocks": {
+        "intro": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We are a modern brand dedicated to curating premium products that fit your lifestyle. Our mission is to make shopping seamless, inspiring, and enjoyable.</p>"
+          }
+        },
+        "feature_quality": {
+          "type": "feature",
+          "settings": {
+            "icon": "✨",
+            "heading": "Premium quality",
+            "text": "Handpicked products from trusted brands and makers."
+          }
+        },
+        "feature_shipping": {
+          "type": "feature",
+          "settings": {
+            "icon": "🚚",
+            "heading": "Fast shipping",
+            "text": "Quick, reliable delivery on every order."
+          }
+        },
+        "feature_support": {
+          "type": "feature",
+          "settings": {
+            "icon": "💬",
+            "heading": "Customer first",
+            "text": "Friendly support ready to help whenever you need."
+          }
+        }
+      },
+      "block_order": ["intro", "feature_quality", "feature_shipping", "feature_support"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

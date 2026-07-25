@@ -2,37 +2,52 @@
   <div class="collection-page__header page-width">
     <h1 class="collection-page__title">{{ collection.title | escape }}</h1>
     {%- if collection.description != blank -%}<div class="collection-page__description rte">{{ collection.description }}</div>{%- endif -%}
-    {%- if collection.image != blank -%}<img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}" class="collection-page__image" loading="eager" width="1600">{%- endif -%}
+    {%- if collection.image != blank -%}<img src="{{ collection.image | image_url: width: 1600 }}" alt="{{ collection.title | escape }}" class="collection-page__image" loading="eager" width="1600" height="{{ collection.image.height | times: 1.0 | divided_by: collection.image.width | times: 1600 | round }}">{%- endif -%}
   </div>
   <div class="page-width">
     <div class="collection-toolbar">
-      <div class="collection-toolbar__count">{{ collection.products_count }} products</div>
-      {%- if section.settings.enable_sorting -%}
-        <form action="{{ collection.url }}" method="get" class="collection-toolbar__sort">
-          <label for="SortBy">Sort by</label>
-          <select name="sort_by" id="SortBy" onchange="this.form.submit()">
-            {%- for option in collection.sort_options -%}
-              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
-            {%- endfor -%}
-          </select>
-        </form>
+      {%- if section.settings.enable_filters -%}
+        <div class="collection-toolbar__filters">
+          <div class="collection-filters__group">
+            <span class="collection-filters__label">{{ 'templates.collections.filter_by_tag' | t }}</span>
+            <div class="collection-filters__tags">
+              {%- for tag in collection.all_tags -%}
+                {{ tag | link_to_tag: tag }}
+              {%- endfor -%}
+            </div>
+          </div>
+          <form action="{{ collection.url }}" method="get" class="collection-filters__price">
+            <span class="collection-filters__label">{{ 'templates.collections.price' | t }}</span>
+            <input type="number" name="filter.v.price.gte" placeholder="{{ 'templates.collections.min' | t }}" aria-label="{{ 'templates.collections.min' | t }}" min="0" value="{{ request.params['filter.v.price.gte'] }}">
+            <span class="collection-filters__divider">—</span>
+            <input type="number" name="filter.v.price.lte" placeholder="{{ 'templates.collections.max' | t }}" aria-label="{{ 'templates.collections.max' | t }}" min="0" value="{{ request.params['filter.v.price.lte'] }}">
+            <button type="submit" class="button button--small">{{ 'templates.collections.apply' | t }}</button>
+          </form>
+          {%- if current_tags.size > 0 or request.params['filter.v.price.gte'] != blank or request.params['filter.v.price.lte'] != blank -%}
+            <a href="{{ collection.url }}" class="collection-filters__clear">{{ 'templates.collections.clear_all' | t }}</a>
+          {%- endif -%}
+        </div>
       {%- endif -%}
-    </div>
-    {%- if section.settings.enable_filters and collection.all_tags.size > 0 -%}
-      <div class="collection-filters">
-        <span class="collection-filters__label">Filter by:</span>
-        {%- for tag in collection.all_tags -%}
-          {{ tag | link_to_tag: tag }}
-        {%- endfor -%}
-        {%- if current_tags -%}<a href="{{ collection.url }}" class="collection-filters__clear">Clear all</a>{%- endif -%}
+      <div class="collection-toolbar__right">
+        <div class="collection-toolbar__count">{{ 'templates.collections.products_count' | t: count: collection.products_count }}</div>
+        {%- if section.settings.enable_sorting -%}
+          <form action="{{ collection.url }}" method="get" class="collection-toolbar__sort">
+            <label for="SortBy" class="visually-hidden">{{ 'templates.collections.sort_by' | t }}</label>
+            <select name="sort_by" id="SortBy" onchange="this.form.submit()">
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+              {%- endfor -%}
+            </select>
+          </form>
+        {%- endif -%}
       </div>
-    {%- endif -%}
+    </div>
     {% paginate collection.products by section.settings.products_per_page %}
       <div class="product-grid product-grid--{{ section.settings.columns_desktop }}-col-desktop product-grid--{{ section.settings.columns_mobile }}-col-mobile">
         {%- for product in collection.products -%}
           {% render 'card-product', product: product, section_id: section.id %}
         {%- endfor -%}
-      </div>
+    </div>
       {% render 'pagination', paginate: paginate %}
     {% endpaginate %}
   </div>
@@ -47,7 +62,7 @@
     {"type": "range", "id": "columns_desktop", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 4},
     {"type": "select", "id": "columns_mobile", "label": "Mobile columns", "options": [{"value": "1", "label": "1"}, {"value": "2", "label": "2"}], "default": "2"},
     {"type": "checkbox", "id": "enable_sorting", "label": "Enable sorting", "default": true},
-    {"type": "checkbox", "id": "enable_filters", "label": "Enable tag filters", "default": true}
+    {"type": "checkbox", "id": "enable_filters", "label": "Enable tag & price filters", "default": true}
   ]
 }
 {% endschema %}

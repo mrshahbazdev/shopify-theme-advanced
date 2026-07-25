@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-content",
+      "blocks": {
+        "intro": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We want you to love your purchase. If you are not completely satisfied, you can return eligible items within 30 days of delivery for a full refund or exchange.</p>"
+          }
+        },
+        "policy_1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Return eligibility"
+          }
+        },
+        "policy_1_text": {
+          "type": "text",
+          "settings": {
+            "text": "<ul><li>Item must be unused and in original packaging.</li><li>Proof of purchase is required.</li><li>Sale items are final sale unless defective.</li></ul>"
+          }
+        },
+        "policy_2": {
+          "type": "heading",
+          "settings": {
+            "heading": "How to return"
+          }
+        },
+        "policy_2_text": {
+          "type": "text",
+          "settings": {
+            "text": "<ol><li>Contact our support team to start a return.</li><li>Pack the item securely with the original packing slip.</li><li>Ship using the provided return label.</li><li>Refunds are processed within 5-7 business days.</li></ol>"
+          }
+        },
+        "contact_button": {
+          "type": "button",
+          "settings": {
+            "text": "Contact support",
+            "link": "/pages/contact",
+            "style": "primary"
+          }
+        }
+      },
+      "block_order": ["intro", "policy_1", "policy_1_text", "policy_2", "policy_2_text", "contact_button"],
+      "settings": {
+        "intro": "Easy returns and exchanges within 30 days."
+      }
+    }
+  },
+  "order": ["main"]
+}

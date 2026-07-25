@@ -4,10 +4,36 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "settings": {}
+      "settings": {
+        "color_scheme": "background-2",
+        "show_branding": true,
+        "show_social": true
+      },
+      "blocks": {
+        "footer-text": {
+          "type": "text",
+          "settings": {
+            "heading": "About us",
+            "text": "<p>Premium products, curated collections, and a seamless shopping experience for modern brands.</p>"
+          }
+        },
+        "footer-menu": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "footer"
+          }
+        },
+        "footer-newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Stay in the loop",
+            "subtext": "Subscribe for updates and exclusive offers."
+          }
+        }
+      },
+      "block_order": ["footer-text", "footer-menu", "footer-newsletter"]
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["footer"]
 }

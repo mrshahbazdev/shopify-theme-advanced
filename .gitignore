@@ -1,6 +1,14 @@
+# macOS
 .DS_Store
+
+# Node modules
 node_modules/
-.env
-config.yml
+
+# Logs
+*.log
+
+# Shopify CLI local config
 .shopify/
-.cache/
+
+# Theme check temp
+theme-check.log

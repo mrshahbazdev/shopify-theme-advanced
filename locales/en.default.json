@@ -12,7 +12,21 @@
       "cart": "Cart",
       "account": "Account",
       "menu": "Menu",
-      "close": "Close"
+      "close": "Close",
+      "shop_all": "Shop all",
+      "main_navigation": "Main navigation",
+      "back_to_top": "Back to top"
+    },
+    "accessibility": {
+      "announcement": "Announcement",
+      "newsletter": "Newsletter",
+      "compare_before_after": "Compare before and after",
+      "lightbox_close": "Close",
+      "share": "Share",
+      "share_on_facebook": "Share on Facebook",
+      "share_on_twitter": "Share on Twitter",
+      "share_on_pinterest": "Share on Pinterest",
+      "share_by_email": "Share by email"
     },
     "pagination": {
       "previous": "Previous",
@@ -113,29 +127,72 @@
     "log_out": "Log out"
   },
   "sections": {
+    "countdown": {
+      "days": "Days",
+      "hours": "Hrs",
+      "minutes": "Mins",
+      "seconds": "Secs"
+    },
+    "featured_collection": {
+      "view_all": "View all"
+    },
     "header": {
       "search": "Search"
     },
     "footer": {
-      "newsletter": "Newsletter"
+      "newsletter": "Newsletter",
+      "all_rights_reserved": "All rights reserved"
     },
     "cart": {
+      "title": "Shopping cart",
       "empty": "Your cart is empty",
       "subtotal": "Subtotal",
       "checkout": "Checkout",
       "update": "Update cart",
-      "continue_shopping": "Continue shopping"
+      "continue_shopping": "Continue shopping",
+      "special_instructions": "Special instructions",
+      "taxes_shipping": "Taxes and shipping calculated at checkout.",
+      "remove": "Remove",
+      "added_to_cart": "added to cart",
+      "add_error": "Could not add item"
     }
   },
   "products": {
     "sold_out": "Sold out",
+    "on_sale": "Sale",
     "unavailable": "Unavailable",
     "add_to_cart": "Add to cart",
     "buy_it_now": "Buy it now",
     "quantity": "Quantity",
     "view_details": "View details",
     "quick_view": "Quick view",
-    "wishlist": "Wishlist"
+    "wishlist": "Wishlist",
+    "sku": "SKU",
+    "availability": "Availability",
+    "in_stock": "In stock",
+    "out_of_stock": "Out of stock",
+    "inventory_html": "{{ count }} in stock",
+    "size_guide": "Size guide",
+    "decrease_quantity": "Decrease quantity",
+    "increase_quantity": "Increase quantity",
+    "description": "Description",
+    "shipping_returns": "Shipping & Returns",
+    "trust_shipping": "Free shipping over $50",
+    "trust_secure": "Secure checkout",
+    "trust_returns": "30-day easy returns",
+    "media": {
+      "open_image": "Open image",
+      "view_media": "View media {{ number }}",
+      "video": "Video",
+      "before": "Before",
+      "after": "After"
+    },
+    "general": {
+      "select_variant": "Please select a variant",
+      "add_error": "Could not add item",
+      "item": "Item",
+      "offer_ended": "Offer has ended"
+    }
   },
   "templates": {
     "search": {
@@ -145,10 +202,58 @@
     "cart": {
       "empty": "Your cart is empty"
     },
+    "article": {
+      "by": "By",
+      "min_read": "min read",
+      "tags": "Tags:",
+      "comments": "Comments ({{ count }})",
+      "name": "Name",
+      "email": "Email",
+      "comment": "Comment",
+      "post_comment": "Post comment"
+    },
+    "blog": {
+      "min_read": "min read"
+    },
+    "policy": {
+      "policies": "Policies"
+    },
+    "collections": {
+      "filter_by_tag": "Filter by tag",
+      "price": "Price",
+      "min": "Min",
+      "max": "Max",
+      "apply": "Apply",
+      "clear_all": "Clear all",
+      "sort_by": "Sort by",
+      "products_count": "{{ count }} products"
+    },
+    "contact": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "send": "Send message",
+      "post_success": "Thanks for contacting us. We'll get back to you soon.",
+      "store": "Store",
+      "address": "Address",
+      "follow_us": "Follow us",
+      "policies": "Policies"
+    },
     "404": {
       "title": "Page not found",
       "subtext": "The page you requested does not exist.",
       "continue_shopping": "Continue shopping"
+    }
+  },
+  "collections": {
+    "empty": "No products found in this collection."
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Gift card",
+      "redeem": "Use this code at checkout to redeem your gift card.",
+      "expired": "This gift card has expired."
     }
   }
 }

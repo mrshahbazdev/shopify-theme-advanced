@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "intro": "Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+        "show_store_info": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

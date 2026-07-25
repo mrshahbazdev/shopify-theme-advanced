@@ -1,0 +1,67 @@
+<div class="rich-page section-{{ section.id }}">
+  <div class="page-width">
+    <div class="rich-page__header">
+      <h1 class="rich-page__title">{% if section.settings.heading != blank %}{{ section.settings.heading | escape }}{% else %}{{ page.title | escape }}{% endif %}</h1>
+      {%- if section.settings.intro != blank -%}<p class="rich-page__intro">{{ section.settings.intro | escape }}</p>{%- endif -%}
+    </div>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          <h2 class="rich-page__section-title" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>
+        {%- when 'text' -%}
+          <div class="rich-page__text rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- when 'image' -%}
+          <div class="rich-page__image-wrapper" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" width="1400" height="{{ block.settings.image.height | times: 1.0 | divided_by: block.settings.image.width | times: 1400 | round }}">
+            {%- endif -%}
+          </div>
+        {%- when 'faq' -%}
+          <details class="rich-page__faq" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div class="rich-page__answer rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- when 'feature' -%}
+          <div class="rich-page__feature" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}<span class="rich-page__feature-icon">{{ block.settings.icon | escape }}</span>{%- endif -%}
+            <div>
+              {%- if block.settings.heading != blank -%}<h3 class="rich-page__feature-title">{{ block.settings.heading | escape }}</h3>{%- endif -%}
+              {%- if block.settings.text != blank -%}<p class="rich-page__feature-text">{{ block.settings.text | escape }}</p>{%- endif -%}
+            </div>
+          </div>
+        {%- when 'button' -%}
+          <a href="{{ block.settings.link }}" class="button {% if block.settings.style == 'primary' %}button--primary{% else %}button--secondary{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</a>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Page content",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading", "info": "Leave blank to use page title"},
+    {"type": "textarea", "id": "intro", "label": "Intro text"}
+  ],
+  "blocks": [
+    {"type": "heading", "name": "Heading", "settings": [{"type": "text", "id": "heading", "label": "Heading", "default": "Section heading"}]},
+    {"type": "text", "name": "Text", "settings": [{"type": "richtext", "id": "text", "label": "Text", "default": "<p>Add your content here.</p>"}]},
+    {"type": "image", "name": "Image", "settings": [{"type": "image_picker", "id": "image", "label": "Image"}]},
+    {"type": "faq", "name": "FAQ item", "settings": [
+      {"type": "text", "id": "question", "label": "Question", "default": "Question?"},
+      {"type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer here.</p>"},
+      {"type": "checkbox", "id": "open", "label": "Open by default", "default": false}
+    ]},
+    {"type": "feature", "name": "Feature", "settings": [
+      {"type": "text", "id": "icon", "label": "Icon emoji", "default": "✨"},
+      {"type": "text", "id": "heading", "label": "Heading", "default": "Feature title"},
+      {"type": "textarea", "id": "text", "label": "Text", "default": "Feature description"}
+    ]},
+    {"type": "button", "name": "Button", "settings": [
+      {"type": "text", "id": "text", "label": "Button text", "default": "Learn more"},
+      {"type": "url", "id": "link", "label": "Link"},
+      {"type": "select", "id": "style", "label": "Style", "options": [{"value": "primary", "label": "Primary"}, {"value": "secondary", "label": "Secondary"}], "default": "primary"}
+    ]}
+  ],
+  "presets": [{"name": "Page content"}]
+}
+{% endschema %}

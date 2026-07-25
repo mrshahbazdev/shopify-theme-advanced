@@ -8,10 +8,13 @@
       {%- endfor -%}
     </div>
     {%- if section.settings.show_view_all -%}
-      <a href="{{ collection_obj.url }}" class="button button--secondary featured-collection__view-all">View all</a>
+      <a href="{{ collection_obj.url }}" class="button button--secondary featured-collection__view-all">{{ 'sections.featured_collection.view_all' | t }}</a>
     {%- endif -%}
   {%- else -%}
-    <p class="featured-collection__empty">Select a collection in the theme editor.</p>
+    <div class="featured-collection__empty">
+      <p>{{ 'collections.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--secondary">{{ 'general.navigation.shop_all' | t | default: 'Shop all' }}</a>
+    </div>
   {%- endif -%}
 </div>
 {% schema %}

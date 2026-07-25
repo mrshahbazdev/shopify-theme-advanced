@@ -34,7 +34,11 @@
   <a class="skip-to-content-link visually-hidden" href="#MainContent">Skip to content</a>
   {% sections 'header-group' %}
   <main id="MainContent" class="focus-none" role="main" tabindex="-1">
-    {{ content_for_layout }}
+    {%- if request.path contains '/policies/' -%}
+      {% section 'main-policy' %}
+    {%- else -%}
+      {{ content_for_layout }}
+    {%- endif -%}
   </main>
   {% sections 'footer-group' %}
   {% sections 'overlay-group' %}

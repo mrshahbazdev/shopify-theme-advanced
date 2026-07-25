@@ -1,0 +1,34 @@
+<div class="policy-page section-{{ section.id }}">
+  <div class="page-width">
+    <div class="policy-page__layout">
+      <aside class="policy-page__sidebar">
+        <h2 class="policy-page__sidebar-title">Policies</h2>
+        <nav class="policy-page__menu">
+          {%- for policy in shop.policies -%}
+            <a href="{{ policy.url }}" class="policy-page__menu-link {% if request.path == policy.url %}policy-page__menu-link--active{% endif %}">{{ policy.title | escape }}</a>
+          {%- endfor -%}
+        </nav>
+      </aside>
+      <div class="policy-page__content">
+        {%- assign current_policy = nil -%}
+        {%- for policy in shop.policies -%}
+          {%- if request.path == policy.url -%}{%- assign current_policy = policy -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if current_policy != blank -%}
+          <h1 class="policy-page__title">{{ current_policy.title | escape }}</h1>
+          <div class="policy-page__body rte">{{ current_policy.body }}</div>
+        {%- else -%}
+          <h1 class="policy-page__title">{{ page.title | escape }}</h1>
+          <div class="policy-page__body rte">{{ page.content }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Policy page",
+  "settings": [],
+  "presets": [{"name": "Policy page"}]
+}
+{% endschema %}

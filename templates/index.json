@@ -42,7 +42,34 @@
       "type": "testimonials",
       "settings": {
         "heading": "What our customers say"
-      }
+      },
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Great product and fast shipping!</p>",
+            "author": "Happy Customer",
+            "rating": 5
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Beautiful design and easy to customize.</p>",
+            "author": "Shopify Merchant",
+            "rating": 5
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>My sales increased after switching to this theme.</p>",
+            "author": "Brand Owner",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["testimonial-1", "testimonial-2", "testimonial-3"]
     },
     "countdown": {
       "type": "countdown-timer",

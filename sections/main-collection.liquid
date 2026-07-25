@@ -18,12 +18,12 @@
           </div>
           <form action="{{ collection.url }}" method="get" class="collection-filters__price">
             <span class="collection-filters__label">Price</span>
-            <input type="number" name="price_min" placeholder="Min" aria-label="Minimum price" min="0" value="{{ request.params.price_min }}">
+            <input type="number" name="filter.v.price.gte" placeholder="Min" aria-label="Minimum price" min="0" value="{{ request.params['filter.v.price.gte'] }}">
             <span class="collection-filters__divider">—</span>
-            <input type="number" name="price_max" placeholder="Max" aria-label="Maximum price" min="0" value="{{ request.params.price_max }}">
+            <input type="number" name="filter.v.price.lte" placeholder="Max" aria-label="Maximum price" min="0" value="{{ request.params['filter.v.price.lte'] }}">
             <button type="submit" class="button button--small">Apply</button>
           </form>
-          {%- if current_tags.size > 0 or request.params.price_min != blank or request.params.price_max != blank -%}
+          {%- if current_tags.size > 0 or request.params['filter.v.price.gte'] != blank or request.params['filter.v.price.lte'] != blank -%}
             <a href="{{ collection.url }}" class="collection-filters__clear">Clear all</a>
           {%- endif -%}
         </div>

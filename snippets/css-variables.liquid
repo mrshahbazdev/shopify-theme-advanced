@@ -1,20 +1,20 @@
-{{ settings.type_header_font | font_face: font_display: 'swap' }}
-{{ settings.type_body_font | font_face: font_display: 'swap' }}
 <style>
-:root {
-  --color-primary: {{ settings.colors_primary | default: '#000000' }};
-  --color-secondary: {{ settings.colors_secondary | default: '#ffffff' }};
-  --color-accent: {{ settings.colors_accent | default: '#ff6b35' }};
-  --color-text: {{ settings.colors_text | default: '#333333' }};
-  --color-background: {{ settings.colors_background | default: '#ffffff' }};
-  --color-text-inverse: {{ settings.colors_text_inverse | default: '#ffffff' }};
-  --font-heading: {{ settings.type_header_font.family | default: settings.type_header_font | default: 'sans-serif' }};
-  --font-body: {{ settings.type_body_font.family | default: settings.type_body_font | default: 'sans-serif' }};
-  --base-font-size: {{ settings.type_base_size | default: 16 }}px;
-  --page-width: 1400px;
-}
-.color-accent-1 { background: var(--color-primary); color: var(--color-text-inverse); }
-.color-accent-2 { background: var(--color-accent); color: var(--color-text-inverse); }
-.color-background-1 { background: var(--color-background); color: var(--color-text); }
-.color-background-2 { background: var(--color-secondary); color: var(--color-text); }
+  {{ settings.type_header_font | font_face: font_display: 'swap' }}
+  {{ settings.type_body_font | font_face: font_display: 'swap' }}
+  :root {
+    --color-primary: {{ settings.colors_primary | default: '#000000' }};
+    --color-secondary: {{ settings.colors_secondary | default: '#ffffff' }};
+    --color-accent: {{ settings.colors_accent | default: '#ff6b35' }};
+    --color-text: {{ settings.colors_text | default: '#333333' }};
+    --color-background: {{ settings.colors_background | default: '#ffffff' }};
+    --color-text-inverse: {{ settings.colors_text_inverse | default: '#ffffff' }};
+    --font-heading: {{ settings.type_header_font.family | default: settings.type_header_font | default: 'sans-serif' }};
+    --font-body: {{ settings.type_body_font.family | default: settings.type_body_font | default: 'sans-serif' }};
+    --base-font-size: {{ settings.type_base_size | default: 16 }}px;
+    --page-width: 1400px;
+  }
+  .color-accent-1 { background: var(--color-primary); color: var(--color-text-inverse); }
+  .color-accent-2 { background: var(--color-accent); color: var(--color-text-inverse); }
+  .color-background-1 { background: var(--color-background); color: var(--color-text); }
+  .color-background-2 { background: var(--color-secondary); color: var(--color-text); }
 </style>

@@ -153,7 +153,10 @@
       "phone": "Phone",
       "message": "Message",
       "send": "Send message",
-      "post_success": "Thanks for contacting us. We'll get back to you soon."
+      "post_success": "Thanks for contacting us. We'll get back to you soon.",
+      "store": "Store",
+      "address": "Address",
+      "follow_us": "Follow us"
     },
     "404": {
       "title": "Page not found",
